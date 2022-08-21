@@ -1,25 +1,42 @@
+html{
+  height: 100%;
+}
+
+input{
+  border: none;
+  border-bottom: 1px solid #E4E4E4;
+}
+
+body{
+  height: 100%;
+}
+
+*,*:after, *:before{
+  box-sizing: border-box;
+}
+
+#root{
+  height: 100%;
+}
+
 .App {
+  height: 100%;
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  margin-left: 2vw;
+  height: 5vmin;
+  min-height: 30px;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -28,11 +45,114 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+ul{
+  list-style: none;
+}
+
+.content{
+  height: 100%;
+}
+
+.navigation-items{
+  display: flex;
+  margin-right: 2.5vw;
+}
+
+.navigation-button{
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 2vmin;
+  color: #fff;
+  font-weight: 400;
+}
+
+.navigation-button.active{
+  color: #FDBF5A;;
+}
+
+.navigation-item{
+  margin-right: 2.5vw;
+  font-size: 2vmin;
+  cursor: pointer;
+}
+
+.navigation-item.active{
+  color: #FDBF5A;
+}
+
+.navigation-item:last-child{
+  margin-right: 0;
+}
+
+.login-page{
+  height: 100%;
+  display: flex;
+}
+
+.map-page{
+  height: 100%;
+}
+
+.profile-page{
+  height: 100%;
+}
+
+.btn-login{
+  border: none;
+  padding: 16px 141px;
+  background: #FDBF5A; 
+  border-radius: 32px;
+}
+
+.profile__content{
+  flex-direction: column;
+  display: flex;
+}
+
+.profile__form{
+  display: flex;
+}
+
+.form__left-column{
+  text-align: start;
+}
+
+.login__left-column{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #282c34;
+}
+
+.login__right-column{
+  flex: 1.5;
+}
+
+.login-logo{
+  width: 192px;
+}
+
+.right-column__content{
+  background-image: url('./map-background.png');
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-content{
+  border-radius: 30px;
+  padding: 56px 112px;
+  background: #fff;
+  height: 540px;
+  width: 580px;
+}
+
+.enter{
+  font-size: 30px;
+  font-weight: bold;
 }

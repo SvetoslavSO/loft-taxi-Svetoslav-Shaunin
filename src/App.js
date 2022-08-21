@@ -1,25 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Map from './Map.jsx'
+import Profile from './Profile';
+import Logout from './Logout';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const PAGES = {
+  Map: Map ,
+  Profile: Profile,
+  Logout: Logout
 }
 
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItem: 'Map'
+    }
+  }
+
+  changeState = (name) => {
+    this.setState({ activeItem: name})
+  }
+
+  isActive = (value) => {
+    return 'navigation-button ' + ((value === this.state.activeItem) ? 'active' : '')
+  }
+
+  render () {
+    const page = this.state.activeItem
+    const CurrentPage = PAGES[page]
+    return (
+      <div className="App">
+        <main className='content'>
+          <CurrentPage changeState={this.changeState}/>
+        </main>
+      </div>
+    );
+  }
+}
 export default App;
