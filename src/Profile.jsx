@@ -14,7 +14,7 @@ class Profile extends React.Component {
       }
     }
 
-    const changeState = this.props.changeState
+    const { changeState } = this.props
 
     return (
       <div className="profile-page">
