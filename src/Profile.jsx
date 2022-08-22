@@ -6,7 +6,7 @@ class Profile extends React.Component {
   render(){
     let cardCounter = 0
 
-    const ValidateCard = (e) => {
+    const onKeyUpValidateCard = (e) => {
       cardCounter = cardCounter + 1;
       if (cardCounter === 4) {
         e.target.value = e.target.value + "  "
@@ -14,9 +14,11 @@ class Profile extends React.Component {
       }
     }
 
+    const changeState = this.props.changeState
+
     return (
       <div className="profile-page">
-        <NavigationMenu changeState={ this.props } activeItem='Profile'/>
+        <NavigationMenu changeState={ changeState } activeItem='Profile'/>
         <div className="profile__content">
           <div className="page-name">Профиль</div>
           <div className="page-desc">Введите платёжные данные</div>
@@ -25,7 +27,7 @@ class Profile extends React.Component {
               <label htmlFor="email">Имя владельца<br/></label>
               <input id="email" type='email' name="email" size='28'/><br/>
               <label htmlFor="card">Номер карты<br/></label>
-              <input id='card' type="text" name="card" size='28' onKeyUp={(e)=>ValidateCard(e)}/><br/>
+              <input id='card' type="text" name="card" size='28' onKeyUp={(e)=>onKeyUpValidateCard(e)}/><br/>
               <div className="expiration-date">
                 <label htmlFor="date">MM/YY<br/></label>
                 <input id="date" type='text' name="date" size='28'/><br/>

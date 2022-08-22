@@ -24,10 +24,6 @@ class App extends React.Component {
     this.setState({ activeItem: name})
   }
 
-  isActive = (value) => {
-    return 'navigation-button ' + ((value === this.state.activeItem) ? 'active' : '')
-  }
-
   render () {
     const page = this.state.activeItem
     const CurrentPage = PAGES[page]
