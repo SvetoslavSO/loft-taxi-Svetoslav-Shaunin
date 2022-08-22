@@ -100,8 +100,11 @@ ul{
 }
 
 .btn-login{
+  font-size: 25px;
+  width: 353px;
+  font-weight: 400;
   border: none;
-  padding: 16px 141px;
+  padding: 16px;
   background: #FDBF5A; 
   border-radius: 32px;
 }
@@ -155,4 +158,15 @@ ul{
 .enter{
   font-size: 30px;
   font-weight: bold;
+}
+
+.new-profile{
+  display: flex;
+}
+
+.new-profile-btn{
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #FDBF5A;
 }

@@ -3,18 +3,20 @@ import React from 'react';
 import Map from './Map.jsx'
 import Profile from './Profile';
 import Logout from './Logout';
+import Registration from './Registartion';
 
 const PAGES = {
   Map: Map ,
   Profile: Profile,
-  Logout: Logout
+  Logout: Logout,
+  Registration: Registration
 }
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'Map'
+      activeItem: 'Logout'
     }
   }
 
