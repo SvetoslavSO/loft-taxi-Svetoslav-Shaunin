@@ -2,14 +2,15 @@ import './App.css';
 import React from 'react';
 import Map from './Map.jsx'
 import Profile from './Profile';
-import Logout from './Logout';
-import Registration from './Registartion';
+import { LogoutWithAuth } from './Logout';
+import { RegistrationWithAuth } from './Registration';
+import { withAuth } from './AuthContext';
 
 const PAGES = {
-  Map: Map ,
-  Profile: Profile,
-  Logout: Logout,
-  Registration: Registration
+  Map: (props)=> <Map {...props} /> ,
+  Profile: (props) => <Profile {...props} />,
+  Logout: (props) => <LogoutWithAuth {...props}/>,
+  Registration: (props) => <RegistrationWithAuth {...props}/>
 }
 
 class App extends React.Component {
@@ -21,14 +22,21 @@ class App extends React.Component {
   }
 
   changeState = (name) => {
-    this.setState({ activeItem: name})
+    if (this.props.isLoggedIn) {
+      this.setState({ activeItem: name})
+    } else if (name === 'Registration') {
+      this.setState({ activeItem: 'Registration'})
+    } else {
+      this.setState({ activeItem: 'Logout'})
+    }
+    
   }
 
   render () {
     const page = this.state.activeItem
     const CurrentPage = PAGES[page]
     return (
-      <div className="App">
+      <div className="App" id='app' data-testid="application">
         <main className='content'>
           <CurrentPage changeState={this.changeState}/>
         </main>
@@ -36,4 +44,4 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+export default withAuth(App);

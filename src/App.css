@@ -32,6 +32,8 @@ body{
 }
 
 .App-header {
+  position: relative;
+  z-index: 10;
   background-color: #282c34;
   min-height: 10vh;
   display: flex;
@@ -69,7 +71,7 @@ ul{
 }
 
 .navigation-button.active{
-  color: #FDBF5A;;
+  color: #FDBF5A;
 }
 
 .navigation-item{
@@ -100,6 +102,7 @@ ul{
 }
 
 .btn-login{
+  cursor: pointer;
   font-size: 25px;
   width: 353px;
   font-weight: 400;
@@ -107,6 +110,7 @@ ul{
   padding: 16px;
   background: #FDBF5A; 
   border-radius: 32px;
+  margin-bottom: 5px;
 }
 
 .profile__content{
@@ -148,6 +152,9 @@ ul{
 }
 
 .form-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border-radius: 30px;
   padding: 56px 112px;
   background: #fff;
@@ -161,6 +168,7 @@ ul{
 }
 
 .new-profile{
+  justify-content: center;
   display: flex;
 }
 
@@ -169,4 +177,15 @@ ul{
   border: none;
   background: transparent;
   color: #FDBF5A;
+}
+
+.form__addition{
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.registration{
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-weight: bold;
 }

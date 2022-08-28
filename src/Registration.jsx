@@ -4,7 +4,7 @@ import { withAuth } from "./AuthContext";
 import TextField from '@mui/material/TextField';
 import {PropTypes} from 'prop-types'
 
-class Logout extends React.Component{
+class Registration extends React.Component{
 
   auth = async (event) => {
     event.preventDefault();
@@ -14,7 +14,6 @@ class Logout extends React.Component{
   }
 
   render() {
-    const { changeState } = this.props
     return (
       <div className="login-page">
         <div className="login__left-column">
@@ -23,8 +22,8 @@ class Logout extends React.Component{
         <div className="login__right-column">
           <div className="right-column__content">
             <div className="form-content">
-              <div className="enter">
-                Войти
+              <div className="registration">
+                Зарегистрироваться
               </div>
               <form onSubmit={this.auth} className="form">
                 <div className="form__left-column">
@@ -43,7 +42,22 @@ class Logout extends React.Component{
                       }
                     }}
                   /><br/>
-                  <label htmlFor="password">Пароль</label><br/>
+                  <label htmlFor="name">Как вас зовут?</label><br/>
+                  <TextField 
+                    variant='standard' 
+                    id="name" 
+                    type='text' 
+                    name="name"
+                    sx={{
+                      marginBottom: 3,
+                      width: 350,
+                      outline: '#FDBF5A',
+                      '& .MuiInputBase-root::after' : {
+                        borderBottom: '#FDBF5A'
+                      }
+                    }}
+                  />
+                  <label htmlFor="password">Придумайте пароль</label><br/>
                   <TextField 
                     variant='standard' 
                     id="password" 
@@ -59,13 +73,9 @@ class Logout extends React.Component{
                     }}
                   />
                   <div className="form__addition">Забыли Пароль</div>
-                  <button type="submit" className="btn-login" onClick={() => changeState("Map")}>Войти</button>
+                  <button type="submit" className="btn-login">Зарегистрироваться</button>
                 </div>
               </form>
-              <div className="new-profile">
-                <div className="new-profile__text">Новый пользователь?</div>
-                <button className="new-profile-btn" type="button" onClick={() => changeState("Registration")}>Регистрация</button>
-              </div>
             </div>
           </div>
         </div>
@@ -74,11 +84,11 @@ class Logout extends React.Component{
   }
 }
 
-Logout.propTypes = {
+Registration.propTypes = {
   isLoggedIn: PropTypes.bool,
   logIn: PropTypes.func,
   logOut: PropTypes.func,
   changeState: PropTypes.func
 };
 
-export const LogoutWithAuth = withAuth(Logout)
+export const RegistrationWithAuth = withAuth(Registration)

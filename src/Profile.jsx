@@ -1,5 +1,6 @@
 import React from "react";
-import NavigationMenu from './NavigationMenu'
+import { NavigationMenu } from './NavigationMenu'
+import {PropTypes} from 'prop-types'
 
 class Profile extends React.Component {
 
@@ -17,15 +18,15 @@ class Profile extends React.Component {
     const { changeState } = this.props
 
     return (
-      <div className="profile-page">
+      <div data-testid='profile' className="profile-page">
         <NavigationMenu changeState={ changeState } activeItem='Profile'/>
         <div className="profile__content">
           <div className="page-name">Профиль</div>
           <div className="page-desc">Введите платёжные данные</div>
           <form className="profile__form">
             <div className="form__left-column">
-              <label htmlFor="email">Имя владельца<br/></label>
-              <input id="email" type='email' name="email" size='28'/><br/>
+              <label htmlFor="username">Имя владельца<br/></label>
+              <input id="username" type='text' name="username" size='28'/><br/>
               <label htmlFor="card">Номер карты<br/></label>
               <input id='card' type="text" name="card" size='28' onKeyUp={(e)=>onKeyUpValidateCard(e)}/><br/>
               <div className="expiration-date">
@@ -44,5 +45,13 @@ class Profile extends React.Component {
     )
   }
 }
+
+Profile.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  activeItem: PropTypes.string,
+  logIn: PropTypes.func,
+  logOut: PropTypes.func,
+  changeState: PropTypes.func
+};
 
 export default Profile

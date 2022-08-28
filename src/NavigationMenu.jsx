@@ -1,10 +1,18 @@
 import React from "react";
 import logo from './logo.svg';
+import { withAuth } from "./AuthContext";
+import {PropTypes} from 'prop-types'
 
-class NavigationMenu extends React.Component {
+class Nav extends React.Component {
   
   isActive = (value, activeItem) => {
     return 'navigation-button ' + ((value === activeItem) ? 'active' : '')
+  }
+
+  unAuth = async (event) => {
+    event.preventDefault();
+    await this.props.logOut()
+    this.props.changeState('Logout')
   }
 
   render () {
@@ -13,7 +21,7 @@ class NavigationMenu extends React.Component {
     return (
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <nav className='navigation-menu'>
+        <nav onSubmit={this.unAuth} className='navigation-menu'>
           <ul className="navigation-items">
             <li className='navigation-item'>
               <button type="button" className={this.isActive('Map', activeItem)} onClick={() => changeState("Map")}>Карта</button>
@@ -22,7 +30,7 @@ class NavigationMenu extends React.Component {
               <button type="button" className={this.isActive('Profile', activeItem)} onClick={() => changeState("Profile")}>Профиль</button>
             </li>
             <li className='navigation-item'>
-              <button type="button" className={this.isActive('Logout', activeItem)} onClick={() => changeState("Logout")}>Выйти</button>
+              <button type="submit" className={this.isActive('Logout', activeItem)} onClick={(event) => this.unAuth(event)}>Выйти</button>
             </li>
           </ul>
         </nav>
@@ -31,4 +39,12 @@ class NavigationMenu extends React.Component {
   }
 }
 
-export default NavigationMenu
+Nav.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  activeItem: PropTypes.string,
+  logIn: PropTypes.func,
+  logOut: PropTypes.func,
+  changeState: PropTypes.func
+};
+
+export const NavigationMenu = withAuth(Nav)
