@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationMenu } from './NavigationMenu'
 import {PropTypes} from 'prop-types'
+import TextField from '@mui/material/TextField';
 
 class Profile extends React.Component {
 
@@ -26,16 +27,69 @@ class Profile extends React.Component {
           <form className="profile__form">
             <div className="form__left-column">
               <label htmlFor="username">Имя владельца<br/></label>
-              <input id="username" type='text' name="username" size='28'/><br/>
+              <TextField 
+                    variant='standard' 
+                    id="username" 
+                    type='text' 
+                    name="username"
+                    sx={{
+                      marginBottom: 3,
+                      width: 350,
+                      outline: '#FDBF5A',
+                      '& .MuiInputBase-root::after' : {
+                        borderBottom: '#FDBF5A'
+                      }
+                    }}
+                  /><br/>
               <label htmlFor="card">Номер карты<br/></label>
-              <input id='card' type="text" name="card" size='28' onKeyUp={(e)=>onKeyUpValidateCard(e)}/><br/>
+              <TextField 
+                    variant='standard' 
+                    id="card" 
+                    type='text' 
+                    name="card"
+                    onKeyUp={(e)=>onKeyUpValidateCard(e)}
+                    sx={{
+                      marginBottom: 3,
+                      width: 350,
+                      outline: '#FDBF5A',
+                      '& .MuiInputBase-root::after' : {
+                        borderBottom: '#FDBF5A'
+                      }
+                    }}
+                  /><br/>
               <div className="expiration-date">
                 <label htmlFor="date">MM/YY<br/></label>
-                <input id="date" type='text' name="date" size='28'/><br/>
+                <TextField 
+                    variant='standard' 
+                    id="date" 
+                    type='text' 
+                    name="date"
+                    sx={{
+                      marginBottom: 3,
+                      width: 350,
+                      outline: '#FDBF5A',
+                      '& .MuiInputBase-root::after' : {
+                        borderBottom: '#FDBF5A'
+                      }
+                    }}
+                  /><br/>
               </div>
               <div className="cvc">
                 <label htmlFor="CVC">CVC<br/></label>
-                <input id="CVC" type='text' name="CVC" size='28'/><br/>
+                <TextField 
+                    variant='standard' 
+                    id="CVC"
+                    type='text' 
+                    name="CVC"
+                    sx={{
+                      marginBottom: 3,
+                      width: 350,
+                      outline: '#FDBF5A',
+                      '& .MuiInputBase-root::after' : {
+                        borderBottom: '#FDBF5A'
+                      }
+                    }}
+                  /><br/>
               </div>
             </div>
             <div className="form__right-column"></div>
