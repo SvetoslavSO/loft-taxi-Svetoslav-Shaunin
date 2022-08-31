@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import './MapComponent.css'
+import env from './env'
 
-mapboxgl.accessToken =
-  'pk.eyJ1Ijoic2hhdW5pbnNvIiwiYSI6ImNsNzkxNDQxdjBmNXQzdm1sYXJvcGI4MncifQ.zCsBF8wuqivx-E0nlRcqNA';
+mapboxgl.accessToken = env.accessToken;
 
 const MapComponent = () => {
   const mapContainerRef = useRef(null);
