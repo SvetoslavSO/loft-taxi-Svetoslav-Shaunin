@@ -1,45 +1,60 @@
-import React from "react";
+import { React, useEffect } from "react";
 import logo from './logo.svg';
-import { withAuth } from "./AuthContext";
 import {PropTypes} from 'prop-types'
+import { setPage, logOut } from './redux/ui/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPage, logged } from './redux/ui/selector';
+import {
+  useNavigate,
+  Link
+} from "react-router-dom";
 
-class Nav extends React.Component {
-  
-  isActive = (value, activeItem) => {
+const NavigationMenu = () => {
+  const navigate = useNavigate()
+  const loggedIn = useSelector(logged)
+  const isActive = (value, activeItem) => {
     return 'navigation-button ' + ((value === activeItem) ? 'active' : '')
   }
-
-  unAuth = async (event) => {
-    event.preventDefault();
-    await this.props.logOut()
-    this.props.changeState('Logout')
+  const dispatch = useDispatch()
+  const changeState = (namePage) => {
+    dispatch(setPage(namePage));
   }
-
-  render () {
-    const changeState = this.props.changeState
-    const activeItem = this.props.activeItem
-    return (
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <nav onSubmit={this.unAuth} className='navigation-menu'>
-          <ul className="navigation-items">
-            <li className='navigation-item'>
-              <button type="button" className={this.isActive('Map', activeItem)} onClick={() => changeState("Map")}>Карта</button>
-            </li>
-            <li className='navigation-item'>
-              <button type="button" className={this.isActive('Profile', activeItem)} onClick={() => changeState("Profile")}>Профиль</button>
-            </li>
-            <li className='navigation-item'>
-              <button type="submit" className={this.isActive('Logout', activeItem)} onClick={(event) => this.unAuth(event)}>Выйти</button>
-            </li>
-          </ul>
-        </nav>
-      </header>
-    );
+  const page = useSelector(selectPage)
+  const unAuth = () => {
+    dispatch(logOut())
+    changeState('Logout')
   }
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate('/')
+    }
+  }, [loggedIn, navigate])
+  const activeItem = page
+  return (
+    <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+      <nav onSubmit={unAuth} className='navigation-menu'>
+        <ul className="navigation-items">
+          <li className='navigation-item'>
+            <Link to="/map">
+              <button type="button" className={isActive('Map', activeItem)} onClick={() => changeState("Map")}>Карта</button>
+            </Link>
+          </li>
+          <li className='navigation-item'>
+            <Link to="/profile">
+              <button type="button" className={isActive('Profile', activeItem)} onClick={() => changeState("Profile")}>Профиль</button>
+            </Link>
+          </li>
+          <li className='navigation-item'>
+            <button type="button" className={isActive('Logout', activeItem)} onClick={() => unAuth()}>Выйти</button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
 }
 
-Nav.propTypes = {
+NavigationMenu.propTypes = {
   isLoggedIn: PropTypes.bool,
   activeItem: PropTypes.string,
   logIn: PropTypes.func,
@@ -47,4 +62,4 @@ Nav.propTypes = {
   changeState: PropTypes.func
 };
 
-export const NavigationMenu = withAuth(Nav)
+export default NavigationMenu

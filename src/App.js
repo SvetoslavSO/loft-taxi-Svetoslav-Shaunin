@@ -2,46 +2,24 @@ import './App.css';
 import React from 'react';
 import Map from './Map.jsx'
 import Profile from './Profile';
-import { LogoutWithAuth } from './Logout';
-import { RegistrationWithAuth } from './Registration';
-import { withAuth } from './AuthContext';
+import Logout from './Logout';
+import Registration from './Registration';
+import {
+  Routes,
+  Route
+} from "react-router-dom";
 
-const PAGES = {
-  Map: (props)=> <Map {...props} /> ,
-  Profile: (props) => <Profile {...props} />,
-  Logout: (props) => <LogoutWithAuth {...props}/>,
-  Registration: (props) => <RegistrationWithAuth {...props}/>
+const App = () => {
+  return (
+    <div className="App" id='app' data-testid="application">
+      <Routes>
+        <Route path='/' element={<Logout></Logout>}></Route>
+        <Route path="/map" element={<Map/>}></Route>
+        <Route path="/registration" element={<Registration></Registration>}></Route>
+        <Route path="/profile" element={<Profile></Profile>}></Route>
+      </Routes>
+    </div>
+  );
 }
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeItem: 'Logout'
-    }
-  }
-
-  changeState = (name) => {
-    if (this.props.isLoggedIn) {
-      this.setState({ activeItem: name})
-    } else if (name === 'Registration') {
-      this.setState({ activeItem: 'Registration'})
-    } else {
-      this.setState({ activeItem: 'Logout'})
-    }
-    
-  }
-
-  render () {
-    const page = this.state.activeItem
-    const CurrentPage = PAGES[page]
-    return (
-      <div className="App" id='app' data-testid="application">
-        <main className='content'>
-          <CurrentPage changeState={this.changeState}/>
-        </main>
-      </div>
-    );
-  }
-}
-export default withAuth(App);
+export default App;
