@@ -275,3 +275,16 @@ ul{
   justify-content: space-between;
   display: flex;
 }
+
+.profile-btn{
+  align-self: center;
+  cursor: pointer;
+  font-size: 25px;
+  width: 353px;
+  font-weight: 400;
+  border: none;
+  padding: 16px;
+  background: #FDBF5A; 
+  border-radius: 32px;
+  margin-bottom: 5px;
+}

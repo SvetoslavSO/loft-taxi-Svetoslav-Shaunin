@@ -108,6 +108,7 @@ const Profile = () => {
               </div>
             </div>
           </form>
+          <button type="button" className="profile-btn">сохранить</button>
         </div>
       </div>
     </div>
