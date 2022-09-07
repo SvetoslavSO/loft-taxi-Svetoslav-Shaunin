@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import './NavigationMenu.css'
 import logo from '../assets/logo.svg';
-//import { useMemo } from "react";
+import { useMemo } from "react";
 
 const NavigationMenu = () => {
   const navigate = useNavigate()
@@ -18,11 +18,10 @@ const NavigationMenu = () => {
   const page = useSelector(selectPage)
   const activeItem = page
 
-  const isActive = (value, activeItem) => {
-    return 'navigation-button ' + ((value === activeItem) ? 'active' : '')
-  }
-
-  //const memoIsActive = useMemo((value, activeItem) => isActive(value, activeItem), [activeItem])
+  const memoIsActive = useMemo(() => 
+    (value, activeItem) => {
+      return 'navigation-button ' + ((value === activeItem) ? 'active' : '')
+  }, [])
 
   const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
@@ -46,16 +45,16 @@ const NavigationMenu = () => {
         <ul className="navigation-items">
           <li className='navigation-item'>
             <Link to="/map">
-              <button type="button" className={isActive('Map', activeItem)} onClick={() => changeState("Map")}>Карта</button>
+              <button type="button" className={memoIsActive('Map', activeItem)} onClick={() => changeState("Map")}>Карта</button>
             </Link>
           </li>
           <li className='navigation-item'>
             <Link to="/profile">
-              <button type="button" className={isActive('Profile', activeItem)} onClick={() => changeState("Profile")}>Профиль</button>
+              <button type="button" className={memoIsActive('Profile', activeItem)} onClick={() => changeState("Profile")}>Профиль</button>
             </Link>
           </li>
           <li className='navigation-item'>
-            <button type="button" className={isActive('Logout', activeItem)} onClick={() => unAuth()}>Выйти</button>
+            <button type="button" className={memoIsActive('Logout', activeItem)} onClick={() => unAuth()}>Выйти</button>
           </li>
         </ul>
       </nav>
