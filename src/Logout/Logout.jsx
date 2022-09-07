@@ -1,39 +1,41 @@
-import { React, useEffect } from "react";
-import logo from "./logo-login.svg"
+import { React, useEffect, useCallback } from "react";
 import TextField from '@mui/material/TextField';
 import {PropTypes} from 'prop-types'
-import { setPage, authenticate } from './redux/ui/actions';
+import { setPage, authenticate } from '../redux/ui/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { logged } from './redux/ui/selector';
+import { logged } from '../redux/ui/selector';
 import {
   useNavigate,
   Link
 } from "react-router-dom";
+import './Logout.css'
+import logo from "../assets/logo-login.svg"
 
 const Logout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const loggedIn = useSelector(logged)
+
+  const setUser = (event) => {
+    event.preventDefault()
+    const payload = {
+        payloadEmail : event.target.email.value,
+        payloadPassword : event.target.password.value
+    }
+    dispatch(authenticate(payload))
+  }
+
+  const changeState = useCallback((namePage) => {
+    dispatch(setPage(namePage));
+  }, [dispatch])
+
   useEffect(() => {
     if (loggedIn) {
       navigate('/map')
       changeState('Map')
     }
-  }, [loggedIn, navigate])
-  const setUser = (event) => {
-    event.preventDefault()
-    const { email, password } = event.target
-    const payloadEmail = email.value;
-    const payloadPassword = password.value;
-    const payload = {
-        payloadEmail,
-        payloadPassword
-    }
-    dispatch(authenticate(payload))
-  }
-  const changeState = (namePage) => {
-    dispatch(setPage(namePage));
-  }
+  }, [loggedIn, navigate, changeState])
+
   return (
     <div className="login-page">
       <div className="login__left-column">

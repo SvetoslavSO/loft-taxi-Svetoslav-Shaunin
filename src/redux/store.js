@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { uiReducer } from './ui/reducer'
-import { authMiddleware } from "./auth/authMiddleware";
-import { registrationMiddleware } from "./registration/registrationMiddleware";
+import { authMiddleware } from "./middlewares/authMiddleware";
+import { registrationMiddleware } from "./middlewares/registrationMiddleware";
 
 const rootReducers = combineReducers({
   ui: uiReducer,

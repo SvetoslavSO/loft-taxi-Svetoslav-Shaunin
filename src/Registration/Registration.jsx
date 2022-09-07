@@ -1,40 +1,38 @@
-import { React, useEffect } from "react";
-import logo from "./logo-login.svg"
+import { React, useEffect, useCallback } from "react";
 import TextField from '@mui/material/TextField';
 import {PropTypes} from 'prop-types'
-import { setPage, reg } from './redux/ui/actions';
+import { setPage, reg } from '../redux/ui/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { logged } from './redux/ui/selector';
+import { logged } from '../redux/ui/selector';
 import {
-  useNavigate,
-  Link
+  useNavigate
 } from "react-router-dom";
+import './Registration.css'
+import logo from "../assets/logo-login.svg"
 
 const Registration = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const loggedIn = useSelector(logged)
-  const changeState = (namePage) => {
+
+  const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
-  }
+  }, [dispatch])
+
   useEffect(() => {
     if(loggedIn){
       navigate('/map')
       changeState('Map')
     }
-  }, [loggedIn, navigate])
+  }, [loggedIn, navigate, changeState])
+
   const registrate = (event) => {
     event.preventDefault();
-    const { email, name, password } = event.target
-    const payloadEmail = email.value
-    const payloadName = name.value
-    const payloadPassword = password.value
-    const payloadSurname = 'shaunin'
     const payload = {
-      payloadEmail,
-      payloadName,
-      payloadPassword,
-      payloadSurname
+      payloadEmail: event.target.email.value,
+      payloadName: event.target.name.value,
+      payloadPassword: event.target.password.value,
+      payloadSurname : 'Shaunin'
     }
     dispatch(reg(payload))
   }

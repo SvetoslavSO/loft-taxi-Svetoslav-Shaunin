@@ -1,5 +1,5 @@
 import { reg, logIn } from "../ui/actions"
-import { regRequest } from "./regRequest"
+import { regRequest } from "../requests/regRequest"
 
 export const registrationMiddleware = (store) => (next) => async (action) => {
   if (action.type === reg.type) {

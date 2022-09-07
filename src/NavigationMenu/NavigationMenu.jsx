@@ -1,35 +1,44 @@
-import { React, useEffect } from "react";
-import logo from './logo.svg';
+import { React, useCallback, useEffect } from "react";
 import {PropTypes} from 'prop-types'
-import { setPage, logOut } from './redux/ui/actions';
+import { setPage, logOut } from '../redux/ui/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPage, logged } from './redux/ui/selector';
+import { selectPage, logged } from '../redux/ui/selector';
 import {
   useNavigate,
   Link
 } from "react-router-dom";
+import './NavigationMenu.css'
+import logo from '../assets/logo.svg';
+//import { useMemo } from "react";
 
 const NavigationMenu = () => {
   const navigate = useNavigate()
   const loggedIn = useSelector(logged)
+  const dispatch = useDispatch()
+  const page = useSelector(selectPage)
+  const activeItem = page
+
   const isActive = (value, activeItem) => {
     return 'navigation-button ' + ((value === activeItem) ? 'active' : '')
   }
-  const dispatch = useDispatch()
-  const changeState = (namePage) => {
+
+  //const memoIsActive = useMemo((value, activeItem) => isActive(value, activeItem), [activeItem])
+
+  const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
-  }
-  const page = useSelector(selectPage)
+  }, [dispatch])
+  
   const unAuth = () => {
     dispatch(logOut())
     changeState('Logout')
   }
+
   useEffect(() => {
     if (!loggedIn) {
       navigate('/')
     }
   }, [loggedIn, navigate])
-  const activeItem = page
+  
   return (
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />

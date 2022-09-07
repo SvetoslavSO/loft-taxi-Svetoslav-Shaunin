@@ -1,0 +1,110 @@
+.profile-page{
+  height: 100%;
+}
+
+.page-name{
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.page-desc{
+  color: #7B7B7B;
+  font-weight: normal;
+  font-size: 18px;
+}
+
+.profile__container{
+  background: #828282;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile__content{
+  background: #FFF;
+  border-radius: 18px;
+  padding: 59px 44px;
+  flex-direction: column;
+  display: flex;
+  width: 40%;
+}
+
+.profile__form{
+  display: flex;
+}
+
+.profile-btn{
+  align-self: center;
+  cursor: pointer;
+  font-size: 25px;
+  width: 353px;
+  font-weight: 400;
+  border: none;
+  padding: 16px;
+  background: #FDBF5A; 
+  border-radius: 32px;
+  margin-bottom: 5px;
+}
+
+.form__left-column{
+  text-align: start;
+}
+
+.form__right-column{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.card{
+  padding: 16px 16px 16px 28px;
+  border-radius: 9px;
+  box-shadow: 0 0 5px 4px #f1f1f1;
+  max-height: 190px;
+  height: 190px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card__footer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-header{
+  justify-content: space-between;
+  display: flex;
+}
+
+.card-number{
+  align-self: baseline;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.card-magnet{
+  width: 29px;
+}
+
+.visa-logo{
+  width: 25px;
+  height: 25px;
+  background: rgba(241, 241, 241, 0.5);
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  position: relative;
+}
+
+.visa-logo::after{
+  content: '';
+  right: 50%;
+  position: absolute;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background: rgba(241, 241, 241, 0.5);
+}

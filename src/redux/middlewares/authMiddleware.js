@@ -1,5 +1,5 @@
 import { authenticate, logIn } from "../ui/actions"
-import { authRequest } from "./authRequest"
+import { authRequest } from "../requests/authRequest"
 
 export const authMiddleware = (store) => (next) => async (action) => {
   if (action.type === authenticate.type) {

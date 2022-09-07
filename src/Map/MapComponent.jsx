@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
-import './MapComponent.css'
-import env from './env'
+import env from './env';
+import './Map.css'
 
 mapboxgl.accessToken = env.accessToken;
 
@@ -19,9 +19,7 @@ const MapComponent = () => {
   }, []);
 
   return (
-    <div>
-      <div data-testid="map" className='map-container' ref={mapContainerRef} />
-    </div>
+    <div data-testid="map" className='map-container' ref={mapContainerRef} />
   );
 };
 

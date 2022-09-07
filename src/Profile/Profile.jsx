@@ -1,11 +1,35 @@
-import React from "react";
-import NavigationMenu from './NavigationMenu'
-import cardLogo from './cardLogo.svg';
-import cardMagnet from './magnet.svg';
+import { React, useEffect, useCallback } from "react";
 import {PropTypes} from 'prop-types'
+import { logged } from '../redux/ui/selector';
+import { setPage } from '../redux/ui/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  useNavigate
+} from "react-router-dom";
+import { NavigationMenu } from '../NavigationMenu'
+import './Profile.css'
+import cardLogo from '../assets/cardLogo.svg';
+import cardMagnet from '../assets/magnet.svg';
 import TextField from '@mui/material/TextField';
 
 const Profile = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const loggedIn = useSelector(logged)
+
+  const changeState = useCallback((namePage) => {
+    dispatch(setPage(namePage));
+  }, [dispatch])
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/profile')
+      changeState('Profile')
+    } else {
+      navigate ('/')
+      changeState('Logout')
+    }
+  }, [loggedIn, navigate, changeState])
 
   let cardCounter = 0
 
