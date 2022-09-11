@@ -32,6 +32,11 @@
 
 .profile__form{
   display: flex;
+  flex-direction: column;
+}
+
+.form__columns{
+  display: flex;
 }
 
 .profile-btn{

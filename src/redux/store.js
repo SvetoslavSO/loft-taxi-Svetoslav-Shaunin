@@ -1,8 +1,12 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { uiReducer } from './ui/reducer'
-import { authMiddleware } from "./middlewares/authMiddleware";
-import { registrationMiddleware } from "./middlewares/registrationMiddleware";
+import createSagaMiddleware from "@redux-saga/core";
+import { authSaga } from './sagas/authSaga'
+import { regSaga } from './sagas/regSaga'
+import { addCardSaga } from './sagas/addCardSaga'
+
+const sagaMiddleware = createSagaMiddleware()
 
 const rootReducers = combineReducers({
   ui: uiReducer,
@@ -11,6 +15,9 @@ const rootReducers = combineReducers({
 export const store = configureStore({ 
   reducer: rootReducers, 
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    .concat(authMiddleware)
-    .concat(registrationMiddleware)
+    .concat(sagaMiddleware)
 })
+
+sagaMiddleware.run(authSaga)
+sagaMiddleware.run(regSaga)
+sagaMiddleware.run(addCardSaga)

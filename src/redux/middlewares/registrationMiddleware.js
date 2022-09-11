@@ -3,17 +3,13 @@ import { regRequest } from "../requests/regRequest"
 
 export const registrationMiddleware = (store) => (next) => async (action) => {
   if (action.type === reg.type) {
-    const email = action.payload.payloadEmail;
-    const password = action.payload.payloadPassword;
-    const name = action.payload.payloadName
-    const surname = action.payload.payloadSurname
-    const success = await regRequest(email, password, name, surname)
     const payload = {
-      email,
-      password,
-      name,
-      surname
+      email: action.payload.payloadEmail,
+      password: action.payload.payloadPassword,
+      name: action.payload.payloadName,
+      surname: action.payload.payloadSurname
     }
+    const success = await regRequest(payload)
     if(success) {
       store.dispatch(logIn(payload))
     }

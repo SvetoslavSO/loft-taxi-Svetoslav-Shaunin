@@ -9,7 +9,7 @@ import {
 import { NavigationMenu } from "../NavigationMenu";
 import './Map.css'
 import MapComponent from "./MapComponent";
-
+import { ModalWindow } from "../ModalWindow"
 
 const Map = () => {
   const navigate = useNavigate()
@@ -35,6 +35,9 @@ const Map = () => {
       <NavigationMenu activeItem='Map' />
       <div className="map-container">
         <MapComponent />
+        <div className="modal-window">
+          <ModalWindow />
+        </div>
       </div>
     </div>
   )

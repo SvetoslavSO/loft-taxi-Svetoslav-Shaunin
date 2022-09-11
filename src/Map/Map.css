@@ -3,6 +3,7 @@
 }
 
 .map-container{
+  position: relative;
   height: 90vh;
 }
 
@@ -12,4 +13,16 @@
 
 .mapboxgl-canvas-container{
   height: 100%;
+}
+
+.modal-window{
+  position: absolute;
+  background-color: #fff;
+  border-radius: 10px;
+  width: 33.75%;
+  max-width: 486px;
+  height: 46%;
+  top: 4%;
+  left: 6.6%;
+  z-index: 10;
 }
