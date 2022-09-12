@@ -3,12 +3,10 @@ import {PropTypes} from 'prop-types'
 import {
   setPage,
   addCard,
-  setCurrentCardName,
-  setCurrentCardDate,
-  setCurrentCardNumber,
-  setCurrentCardCvc,
-  setCardNumberCounter,
-  setCardDateCounter
+  setCardName,
+  setCardDate,
+  setCardNumber,
+  setCardCvc
 } from '../redux/ui/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,13 +15,7 @@ import {
   cardNameSelector,
   cardCvcSelector,
   cardDateSelector,
-  cardNumberSelector,
-  currentCardNameSelector,
-  currentCardCvcSelector,
-  currentCardDateSelector,
-  currentCardNumberSelector,
-  cardNumberCounterSelector,
-  cardDateCounterSelector
+  cardNumberSelector
 } from "../redux/ui/selector"
 import {
   useNavigate
@@ -40,16 +32,10 @@ const Profile = () => {
   const dispatch = useDispatch()
   const loggedIn = useSelector(logged)
   const token = useSelector(tokenSelector)
-  let currentCardNumber = useSelector(currentCardNumberSelector)
-  let currentCardData = useSelector(currentCardDateSelector)
-  let currentCardCvc = useSelector(currentCardCvcSelector)
-  let currentCardName = useSelector(currentCardNameSelector)
   let cardNumber = useSelector(cardNumberSelector)
   let cardData = useSelector(cardDateSelector)
   let cardCvc = useSelector(cardCvcSelector)
   let cardName = useSelector(cardNameSelector)
-  let cardNumberCounter = useSelector(cardNumberCounterSelector)
-  let cardDateCounter = useSelector(cardDateCounterSelector)
 
   const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
@@ -82,54 +68,74 @@ const Profile = () => {
   let cardCvcValue = ''
   let cardNameValue = ''
 
-  const onKeyUpValidateCardNumber = (e) => {
-    const isValid = (e.key>= 0 && e.key <= 9 && e.target.value.length < 22)
-    if (isValid){
-      dispatch(setCardNumberCounter(cardNumberCounter + 1))
-      if (cardNumberCounter === 4) {
-        cardNumberValue = currentCardNumber + "  " + e.key
-        dispatch(setCurrentCardNumber(cardNumberValue))
-        dispatch(setCardNumberCounter(1))
-      } else if (e.target.value.length < 22) {
-        cardNumberValue = currentCardNumber + e.key
-        dispatch(setCurrentCardNumber(cardNumberValue))
+  const changeName = (e) => {
+    cardNameValue = e.target.value
+    dispatch(setCardName(cardNameValue))
+  }
+
+  const changeNumber = (e) => {
+    cardNumberValue = e.target.value
+    if(cardNumberValue.length === 4 ) {
+      cardNumberValue = cardNumberValue + '  '
+      dispatch(setCardNumber(`${cardNumberValue}`))
+    } else if (cardNumberValue.length === 5) {
+      if(e.nativeEvent.data === null) {
+        cardNumberValue = cardNumberValue.substring(0, 4)
+        dispatch(setCardNumber(`${cardNumberValue}`))
+      } else {
+        cardNumberValue = cardNumberValue.substring(0, 4) + '  ' + cardNumberValue.substring(4) 
+        dispatch(setCardNumber(`${cardNumberValue}`))
       }
-    } else {
-      e.target.value = currentCardNumber
-    }
-  }
-
-  const onKeyUpValidateCardDate = (e) => {
-    const isValid = (e.key>= 0 && e.key <= 9 && e.target.value.length < 5)
-    if(isValid){
-      dispatch(setCardDateCounter(cardDateCounter + 1))
-      if(cardDateCounter === 2 ) {
-        cardDateValue = currentCardData + "/" + e.key
-        dispatch(setCurrentCardDate(cardDateValue))
-        dispatch(setCardDateCounter(1))
-      } else if (currentCardData.length < 5){
-        cardDateValue = currentCardData + e.key
-        dispatch(setCurrentCardDate(cardDateValue))
+    } else if (cardNumberValue.length === 10) {
+      cardNumberValue = cardNumberValue + '  '
+      dispatch(setCardNumber(`${cardNumberValue}`))    
+    } else if (cardNumberValue.length === 11) {
+      if(e.nativeEvent.data === null) {
+        cardNumberValue = cardNumberValue.substring(0, 10)
+        dispatch(setCardNumber(`${cardNumberValue}`))
+      } else {
+        cardNumberValue = cardNumberValue.substring(0, 10) + '  ' + cardNumberValue.substring(10) 
+        dispatch(setCardNumber(`${cardNumberValue}`))
       }
-    } else {
-      e.target.value = currentCardData
-    }
+    } else if (cardNumberValue.length === 16) {
+      cardNumberValue = cardNumberValue + '  '
+      dispatch(setCardNumber(`${cardNumberValue}`))
+    } else if (cardNumberValue.length === 17) {
+      if(e.nativeEvent.data === null) {
+        cardNumberValue = cardNumberValue.substring(0, 16)
+        dispatch(setCardNumber(`${cardNumberValue}`))
+      } else {
+        cardNumberValue = cardNumberValue.substring(0, 16) + '  ' + cardNumberValue.substring(16) 
+        dispatch(setCardNumber(`${cardNumberValue}`))
+      }
+    }else if (cardNumberValue.length <= 22) {
+      dispatch(setCardNumber(cardNumberValue))
+    } 
   }
 
-  const onKeyUpValidateCardCvc = (e) => {
-    const isValid = (e.key>= 0 && e.key <= 9 && e.target.value.length < 3)
-    if(isValid){
-      cardCvcValue = currentCardCvc + e.key
-      dispatch(setCurrentCardCvc(cardCvcValue))
-    } else {
-      e.target.value = currentCardCvc
-    }
+  const changeDate = (e) => {
+    cardDateValue = e.target.value
+    if(cardDateValue.length === 3  && (cardDateValue.substring(2) === '/')) {
+      cardDateValue = cardDateValue.substring(0, cardDateValue.length - 1)
+      dispatch(setCardDate(`${cardDateValue}`))
+    } else if(cardDateValue.length === 3  && (cardDateValue.substring(2) !== '/')) {
+      cardDateValue = cardDateValue.substring(0, 2) + '/' + cardDateValue.substring(2)
+      dispatch(setCardDate(`${cardDateValue}`))
+    } else if(cardDateValue.length === 2 && (e.nativeEvent.data === null)) {
+      dispatch(setCardDate(`${cardDateValue}`))
+    } else if(cardDateValue.length === 2 && (e.nativeEvent.data !== null)) {
+      cardDateValue = cardDateValue + '/'
+      dispatch(setCardDate(`${cardDateValue}`))
+    }  else if (cardDateValue.length <= 5) {
+      dispatch(setCardDate(cardDateValue))
+    } 
   }
 
-  const onKeyUpValidateCardName = (e) => {
-    console.log(e)
-    cardNameValue = currentCardName + e.key
-    dispatch(setCurrentCardName(cardNameValue))
+  const changeCvc = (e) => {
+    cardCvcValue = e.target.value
+    if(cardCvcValue.length <= 3) {
+      dispatch(setCardCvc(`${cardCvcValue}`))
+    } 
   }
 
   return (
@@ -156,8 +162,8 @@ const Profile = () => {
                           borderBottom: '#FDBF5A'
                         }
                       }}
-                      value={cardName ? cardName : currentCardName}
-                      onKeyUp={(e)=>onKeyUpValidateCardName(e)}
+                      value = {cardName}
+                      onChange = {(e) => changeName(e)}
                     /><br/>
                 <label htmlFor="card">Номер карты<br/></label>
                 <TextField
@@ -165,6 +171,10 @@ const Profile = () => {
                       id="card"
                       type='text'
                       name="card"
+                      inputProps={{
+                        inputMode: 'numeric',
+                        pattern: '[0-9]*'
+                      }}
                       sx={{
                         marginBottom: 3,
                         width: 350,
@@ -173,8 +183,8 @@ const Profile = () => {
                           borderBottom: '#FDBF5A'
                         }
                       }}
-                      value={cardNumber ? cardNumber : currentCardNumber}
-                      onKeyUp={(e)=>onKeyUpValidateCardNumber(e)}
+                      value={cardNumber}
+                      onChange = {(e) => changeNumber(e)}
                     /><br/>  
                 <div className="expiration-date">
                   <label htmlFor="date">MM/YY<br/></label>
@@ -183,6 +193,10 @@ const Profile = () => {
                       id="date"
                       type='text'
                       name="date"
+                      inputProps={{
+                        inputMode: 'numeric',
+                        pattern: '[0-9]*'
+                      }}
                       sx={{
                         marginBottom: 3,
                         width: 350,
@@ -191,8 +205,8 @@ const Profile = () => {
                           borderBottom: '#FDBF5A'
                         }
                       }}
-                      value={cardData ? cardData : currentCardData}
-                      onKeyUp={(e) => onKeyUpValidateCardDate(e)}
+                      value={cardData}
+                      onChange = {(e) => changeDate(e)}
                     /><br/>
                 </div>
                 <div className="cvc">
@@ -202,6 +216,10 @@ const Profile = () => {
                       id="CVC"
                       type='text'
                       name="CVC"
+                      inputProps={{
+                        inputMode: 'numeric',
+                        pattern: '[0-9]*'
+                      }}
                       sx={{
                         marginBottom: 3,
                         width: 350,
@@ -210,8 +228,8 @@ const Profile = () => {
                           borderBottom: '#FDBF5A'
                         }
                       }}
-                      value={cardCvc ? cardCvc : currentCardCvc}
-                      onKeyUp={(e) => onKeyUpValidateCardCvc(e)}
+                      value={cardCvc}
+                      onChange = {(e) => changeCvc(e)}
                     /><br/>
                 </div>
               </div>

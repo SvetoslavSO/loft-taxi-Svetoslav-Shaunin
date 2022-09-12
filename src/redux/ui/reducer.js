@@ -5,12 +5,17 @@ import {
   logIn,
   logOut,
   authToken,
-  setCurrentCardName,
-  setCurrentCardDate,
-  setCurrentCardNumber,
-  setCurrentCardCvc,
-  setCardNumberCounter,
-  setCardDateCounter
+  setCardName,
+  setCardDate,
+  setCardNumber,
+  setCardCvc,
+  setAddresses,
+  setFirstAddress,
+  setSecondAddress,
+  setFirstArrayAddress,
+  setSecondArrayAddress,
+  coords,
+  needTaxi
 } from './actions'
 const initialStore = {
   isLoggedIn: false,
@@ -35,7 +40,15 @@ const initialStore = {
     numberCounter: 0,
     dateCounter: 0
   },
-  authToken: ''
+  addresses: [],
+  authToken: '',
+  firstAddress: '',
+  secondAddress: '',
+  setAddresses: '',
+  firstArrayAddress: null,
+  secondArrayAddress: null,
+  coordinates: [],
+  needTaxi: false
 }
 
 export const uiReducer = createReducer(initialStore, {
@@ -62,7 +75,16 @@ export const uiReducer = createReducer(initialStore, {
     store.currentCard.name = '';
     store.currentCard.cardNumber = '';
     store.currentCard.cardDate = '';
-    store.currentCard.cvc = ''
+    store.currentCard.cvc = '';
+    store.addresses= [];
+    store.authToken =  '';
+    store.firstAddress = '';
+    store.secondAddress = '';
+    store.setAddresses = '';
+    store.firstArrayAddress = null;
+    store.secondArrayAddress = null;
+    store.needTaxi = false;
+    store.coordinates = []
   },
   [regCard.type]: (store, action) => {
     store.userCard.name = action.payload.cardName
@@ -73,22 +95,37 @@ export const uiReducer = createReducer(initialStore, {
   [authToken.type]: (store, action) => {
     store.authToken = action.payload
   },
-  [setCurrentCardName.type]: (store, action) => {
-    store.currentCard.name = action.payload
+  [setCardName.type]: (store, action) => {
+    store.userCard.name = action.payload
   },
-  [setCurrentCardCvc.type]: (store, action) => {
-    store.currentCard.cvc = action.payload
+  [setCardCvc.type]: (store, action) => {
+    store.userCard.cvc = action.payload
   },
-  [setCurrentCardNumber.type]: (store, action) => {
-    store.currentCard.cardNumber = action.payload
+  [setCardNumber.type]: (store, action) => {
+    store.userCard.cardNumber = action.payload
   },
-  [setCurrentCardDate.type]: (store, action) => {
-    store.currentCard.cardDate = action.payload
+  [setCardDate.type]: (store, action) => {
+    store.userCard.cardDate = action.payload
   },
-  [setCardNumberCounter.type]: (store, action) => {
-    store.currentCard.numberCounter = action.payload
+  [setAddresses.type]: (store, action) => {
+    store.addresses = action.payload.addresses
   },
-  [setCardDateCounter.type]: (store, action) => {
-    store.currentCard.dateCounter = action.payload
+  [setFirstAddress.type]: (store, action) => {
+    store.firstAddress = action.payload
+  },
+  [setSecondAddress.type]: (store, action) => {
+    store.secondAddress = action.payload
+  },
+  [setFirstArrayAddress.type]: (store, action) => {
+    store.firstArrayAddress = action.payload
+  },
+  [setSecondArrayAddress.type]: (store, action) => {
+    store.secondArrayAddress = action.payload
+  },
+  [coords.type]: (store, action) => {
+    store.coordinates = action.payload
+  },
+  [needTaxi.type]: (store) => {
+    store.needTaxi = !store.needTaxi
   }
 })

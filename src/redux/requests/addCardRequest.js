@@ -1,5 +1,4 @@
 export const regRequest = async (payload) => {
-  console.log('yes')
   return fetch(
     `https://loft-taxi.glitch.me/card`, 
     {

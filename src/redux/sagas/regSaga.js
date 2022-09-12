@@ -10,7 +10,6 @@ export function* authenticateSaga(action) {
     surname: action.payload.payloadSurname
   }
   const success = yield call(regRequest, payload)
-  console.log(success)
   if(success){
     yield put(logIn(payload))
   }

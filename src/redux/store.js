@@ -5,6 +5,7 @@ import createSagaMiddleware from "@redux-saga/core";
 import { authSaga } from './sagas/authSaga'
 import { regSaga } from './sagas/regSaga'
 import { addCardSaga } from './sagas/addCardSaga'
+import { orderSaga } from "./sagas/orderSaga";
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -21,3 +22,4 @@ export const store = configureStore({
 sagaMiddleware.run(authSaga)
 sagaMiddleware.run(regSaga)
 sagaMiddleware.run(addCardSaga)
+sagaMiddleware.run(orderSaga)
