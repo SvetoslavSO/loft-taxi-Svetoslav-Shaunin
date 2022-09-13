@@ -14,6 +14,7 @@ export function* authenticateSaga(action) {
     yield put(logIn(payload))
     yield put(authToken(success))
     const cardRequest = yield call(getCardRequest, success)
+    console.log(cardRequest)
     if(cardRequest) {
       yield put(regCard(cardRequest))
       const addresses = yield call(getAdressList, success)

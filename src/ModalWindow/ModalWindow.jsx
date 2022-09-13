@@ -46,7 +46,7 @@ const ModalWindow = () => {
     }
   }, [loggedIn, navigate])
 
-  const order = (e) => {
+  const order = () => {
     if(firstAddress && secondAddress) {
       dispatch(needTaxi())
     } else {
@@ -193,7 +193,7 @@ const ModalWindow = () => {
             </div>
           </li>
         </ul>
-        <button onClick={(e) => order(e)} type="button" className="modal-btn">Заказать</button>
+        <button onClick={order} type="button" className="modal-btn">Заказать</button>
       </div>
     </div>
   );

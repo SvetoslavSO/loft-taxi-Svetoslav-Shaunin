@@ -8,7 +8,7 @@ export const regRequest = async (payload) => {
       },
       body: JSON.stringify({
         cardNumber: payload.cardNumber,
-        expiryDate: payload.cardDate,
+        expiryDate: payload.expiryDate,
         cardName: payload.name,
         cvc: payload.cvc,
         token: payload.authToken

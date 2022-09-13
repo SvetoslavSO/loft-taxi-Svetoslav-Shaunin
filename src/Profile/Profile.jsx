@@ -173,7 +173,7 @@ const Profile = () => {
                       name="card"
                       inputProps={{
                         inputMode: 'numeric',
-                        pattern: '[0-9]*'
+                        //pattern: '[0-9]*'
                       }}
                       sx={{
                         marginBottom: 3,
@@ -195,7 +195,7 @@ const Profile = () => {
                       name="date"
                       inputProps={{
                         inputMode: 'numeric',
-                        pattern: '[0-9]*'
+                        //pattern: '[0-9]*'
                       }}
                       sx={{
                         marginBottom: 3,
