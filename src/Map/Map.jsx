@@ -9,11 +9,13 @@ import {
   taxiSelector,
   firstAddressSelector,
   secondAddressSelector,
-  tokenSelector
+  tokenSelector,
+  cardChangedSelector
 } from '../redux/ui/selector';
 import {
   orderReq,
-  setPage
+  setPage,
+  isCardChanged
 } from '../redux/ui/actions';
 import { 
   useDispatch,
@@ -35,6 +37,7 @@ const Map = () => {
   const firstAddress = useSelector(firstAddressSelector)
   const secondAddress = useSelector(secondAddressSelector)
   const token = useSelector(tokenSelector)
+  const cardChanged = useSelector(cardChangedSelector)
 
   const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
@@ -58,6 +61,12 @@ const Map = () => {
         token: token
       }
       dispatch(orderReq(payload))
+    }
+  })
+
+  useEffect(() => {
+    if(cardChanged){
+      dispatch(isCardChanged(false))
     }
   })
 

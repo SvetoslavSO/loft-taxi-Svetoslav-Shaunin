@@ -2,7 +2,7 @@ import { takeEvery, call , put } from 'redux-saga/effects'
 import { authRequest } from '../requests/authRequest'
 import { getAdressList } from '../requests/getAdressList'
 import { getCardRequest } from '../requests/getCardRequest'
-import { authenticate, logIn, authToken, regCard, setAddresses } from '../ui/actions'
+import { authenticate, logIn, authToken, regCard, setAddresses, checkCard } from '../ui/actions'
 
 export function* authenticateSaga(action) {
   const payload = {
@@ -14,14 +14,13 @@ export function* authenticateSaga(action) {
     yield put(logIn(payload))
     yield put(authToken(success))
     const cardRequest = yield call(getCardRequest, success)
-    console.log(cardRequest)
     if(cardRequest) {
       yield put(regCard(cardRequest))
+      yield put(checkCard())
       const addresses = yield call(getAdressList, success)
       if(addresses) {
         yield put (setAddresses(addresses))
       }
-      
     }
   }
 }

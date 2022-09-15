@@ -15,7 +15,11 @@ import {
   setFirstArrayAddress,
   setSecondArrayAddress,
   coords,
-  needTaxi
+  needTaxi,
+  taxiReady,
+  checkCard,
+  isCardChanged,
+  carChange
 } from './actions'
 const initialStore = {
   isLoggedIn: false,
@@ -48,7 +52,11 @@ const initialStore = {
   firstArrayAddress: null,
   secondArrayAddress: null,
   coordinates: [],
-  needTaxi: false
+  needTaxi: false,
+  taxiReady: false,
+  isCardCompleted: false,
+  cardChanged: false,
+  activeCar: 'standart'
 }
 
 export const uiReducer = createReducer(initialStore, {
@@ -84,7 +92,9 @@ export const uiReducer = createReducer(initialStore, {
     store.firstArrayAddress = null;
     store.secondArrayAddress = null;
     store.needTaxi = false;
-    store.coordinates = []
+    store.taxiReady = false;
+    store.coordinates = [];
+    store.cardChanged = false;
   },
   [regCard.type]: (store, action) => {
     store.userCard.name = action.payload.cardName
@@ -127,5 +137,21 @@ export const uiReducer = createReducer(initialStore, {
   },
   [needTaxi.type]: (store) => {
     store.needTaxi = !store.needTaxi
+  },
+  [taxiReady.type]: (store) => {
+    store.taxiReady = !store.taxiReady
+  },
+  [checkCard.type]: (store) => {
+    if (store.userCard.cardDate === undefined || store.userCard.cardNumber === undefined || store.userCard.name === undefined || store.userCard.cvc === undefined) {
+      store.isCardCompleted = false
+    } else {
+      store.isCardCompleted = true
+    }
+  },
+  [isCardChanged.type]: (store, action) => {
+    store.cardChanged = action.payload
+  },
+  [carChange.type] : (store, action) => {
+    store.activeCar = action.payload
   }
 })

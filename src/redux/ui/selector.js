@@ -21,3 +21,7 @@ export const firstArrayAddressSelector = createSelector(selectUI, (ui) => ui.fir
 export const secondArrayAddressSelector = createSelector(selectUI, (ui) => ui.secondArrayAddress)
 export const taxiSelector = createSelector(selectUI, (ui) => ui.needTaxi)
 export const coords = createSelector(selectUI, (ui) => ui.coordinates)
+export const taxiReadySelector = createSelector(selectUI, (ui) => ui.taxiReady)
+export const isCardCompletedSelector = createSelector(selectUI, (ui) => ui.isCardCompleted)
+export const cardChangedSelector = createSelector(selectUI, (ui) => ui.cardChanged)
+export const activeCarSelector = createSelector(selectUI, (ui) => ui.activeCar)

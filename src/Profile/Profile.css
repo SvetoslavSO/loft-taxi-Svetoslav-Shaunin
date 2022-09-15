@@ -35,6 +35,27 @@
   flex-direction: column;
 }
 
+.profile-changed__title{
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.profile-changed__desc{
+  font-size: 18px;
+  color: #7B7B7B;
+  margin-bottom: 10px;
+}
+
+.profile-changed__content{
+  background: #FFF;
+  border-radius: 18px;
+  padding: 59px 44px;
+  flex-direction: column;
+  display: flex;
+  width: 60%;
+}
+
 .form__columns{
   display: flex;
 }

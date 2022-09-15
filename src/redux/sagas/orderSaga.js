@@ -1,6 +1,6 @@
 import { takeEvery, call , put } from 'redux-saga/effects'
 import { orderRequest } from '../requests/orderRequest'
-import { orderReq, coords } from '../ui/actions'
+import { orderReq, coords, taxiReady } from '../ui/actions'
 
 export function* orderSagaRequest(action) {
   const payload = {
@@ -11,6 +11,7 @@ export function* orderSagaRequest(action) {
   const success = yield call(orderRequest, payload)
   if(success){
     yield put(coords(success))
+    yield put(taxiReady())
   }
 }
 

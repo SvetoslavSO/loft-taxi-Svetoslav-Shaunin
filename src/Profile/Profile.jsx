@@ -1,4 +1,8 @@
-import { React, useEffect, useCallback } from "react";
+import {
+  React,
+  useEffect,
+  useCallback
+} from "react";
 import {PropTypes} from 'prop-types'
 import {
   setPage,
@@ -6,16 +10,21 @@ import {
   setCardName,
   setCardDate,
   setCardNumber,
-  setCardCvc
+  setCardCvc,
+  isCardChanged
 } from '../redux/ui/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import {
   logged,
   tokenSelector,
   cardNameSelector,
   cardCvcSelector,
   cardDateSelector,
-  cardNumberSelector
+  cardNumberSelector,
+  cardChangedSelector
 } from "../redux/ui/selector"
 import {
   useNavigate
@@ -36,6 +45,7 @@ const Profile = () => {
   let cardData = useSelector(cardDateSelector)
   let cardCvc = useSelector(cardCvcSelector)
   let cardName = useSelector(cardNameSelector)
+  const cardChanged = useSelector(cardChangedSelector)
 
   const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
@@ -60,7 +70,17 @@ const Profile = () => {
       cardCvc: event.target.CVC.value,
       authToken: token
     }
-    dispatch(addCard(payload))
+    if(payload.cardName === '' || payload.cardDate === '' || payload.cardNumber === '' || payload.cardCvc === '') {
+      alert('не заполнены все поля')
+    } else {
+      dispatch(addCard(payload))
+      dispatch(isCardChanged(true))
+    }
+  }
+
+  const goToMap = () => {
+    navigate('/map')
+    changeState('Map')
   }
 
   let cardNumberValue = ''
@@ -138,123 +158,136 @@ const Profile = () => {
     } 
   }
 
-  return (
-    <div data-testid='profile' className="profile-page">
-      <NavigationMenu activeItem='Profile'/>
-      <div className="profile__container">
-        <div className="profile__content">
-          <div className="page-name">Профиль</div>
-          <div className="page-desc">Введите платёжные данные</div>
-          <form onSubmit={submitCard}  className="profile__form">
-            <div className="form__columns">
-              <div className="form__left-column">
-                <label htmlFor="username">Имя владельца<br/></label>
-                <TextField
-                      variant='standard'
-                      id="username"
-                      type='text'
-                      name="username"
-                      sx={{
-                        marginBottom: 3,
-                        width: 350,
-                        outline: '#FDBF5A',
-                        '& .MuiInputBase-root::after' : {
-                          borderBottom: '#FDBF5A'
-                        }
-                      }}
-                      value = {cardName}
-                      onChange = {(e) => changeName(e)}
-                    /><br/>
-                <label htmlFor="card">Номер карты<br/></label>
-                <TextField
-                      variant='standard'
-                      id="card"
-                      type='text'
-                      name="card"
-                      inputProps={{
-                        inputMode: 'numeric',
-                        //pattern: '[0-9]*'
-                      }}
-                      sx={{
-                        marginBottom: 3,
-                        width: 350,
-                        outline: '#FDBF5A',
-                        '& .MuiInputBase-root::after' : {
-                          borderBottom: '#FDBF5A'
-                        }
-                      }}
-                      value={cardNumber}
-                      onChange = {(e) => changeNumber(e)}
-                    /><br/>  
-                <div className="expiration-date">
-                  <label htmlFor="date">MM/YY<br/></label>
-                  <TextField
-                      variant='standard'
-                      id="date"
-                      type='text'
-                      name="date"
-                      inputProps={{
-                        inputMode: 'numeric',
-                        //pattern: '[0-9]*'
-                      }}
-                      sx={{
-                        marginBottom: 3,
-                        width: 350,
-                        outline: '#FDBF5A',
-                        '& .MuiInputBase-root::after' : {
-                          borderBottom: '#FDBF5A'
-                        }
-                      }}
-                      value={cardData}
-                      onChange = {(e) => changeDate(e)}
-                    /><br/>
-                </div>
-                <div className="cvc">
-                  <label htmlFor="CVC">CVC<br/></label>
-                  <TextField
-                      variant='standard'
-                      id="CVC"
-                      type='text'
-                      name="CVC"
-                      inputProps={{
-                        inputMode: 'numeric',
-                        pattern: '[0-9]*'
-                      }}
-                      sx={{
-                        marginBottom: 3,
-                        width: 350,
-                        outline: '#FDBF5A',
-                        '& .MuiInputBase-root::after' : {
-                          borderBottom: '#FDBF5A'
-                        }
-                      }}
-                      value={cardCvc}
-                      onChange = {(e) => changeCvc(e)}
-                    /><br/>
-                </div>
-              </div>
-              <div className="form__right-column">
-                <div className="card">
-                  <div className="card-header">
-                    <img src={cardLogo} className="card-logo" alt="card-logotype" />
-                    <div className="expire-date">
-                      {cardData}
-                    </div>
-                  </div>
-                  <div className="card-number">{cardNumber}</div>
-                  <div className="card__footer">
-                    <img src={cardMagnet} className="card-magnet" alt="card-magnet" />
-                    <div className="visa-logo"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button type="submit" className="profile-btn">сохранить</button>
-          </form>
+  if(cardChanged){
+    return (
+      <div data-testid='profile' className="profile-page">
+        <NavigationMenu activeItem='Profile'/>
+        <div className="profile__container">
+          <div className="profile-changed__content">
+            <div className="profile-changed__title">Профиль</div>
+            <div className="profile-changed__desc">Платёжные данные обновлены. Теперь вы можете заказывать такси.</div>
+            <button type="button" onClick={goToMap} className="profile-btn">Перейти на карту</button>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div data-testid='profile' className="profile-page">
+        <NavigationMenu activeItem='Profile'/>
+        <div className="profile__container">
+          <div className="profile__content">
+            <div className="page-name">Профиль</div>
+            <div className="page-desc">Введите платёжные данные</div>
+            <form onSubmit={submitCard}  className="profile__form">
+              <div className="form__columns">
+                <div className="form__left-column">
+                  <label htmlFor="username">Имя владельца<br/></label>
+                  <TextField
+                        variant='standard'
+                        id="username"
+                        type='text'
+                        name="username"
+                        sx={{
+                          marginBottom: 3,
+                          width: 350,
+                          outline: '#FDBF5A',
+                          '& .MuiInputBase-root::after' : {
+                            borderBottom: '#FDBF5A'
+                          }
+                        }}
+                        value = {cardName}
+                        onChange = {(e) => changeName(e)}
+                      /><br/>
+                  <label htmlFor="card">Номер карты<br/></label>
+                  <TextField
+                        variant='standard'
+                        id="card"
+                        type='text'
+                        name="card"
+                        inputProps={{
+                          inputMode: 'numeric'
+                        }}
+                        sx={{
+                          marginBottom: 3,
+                          width: 350,
+                          outline: '#FDBF5A',
+                          '& .MuiInputBase-root::after' : {
+                            borderBottom: '#FDBF5A'
+                          }
+                        }}
+                        value={cardNumber}
+                        onChange = {(e) => changeNumber(e)}
+                      /><br/>  
+                  <div className="expiration-date">
+                    <label htmlFor="date">MM/YY<br/></label>
+                    <TextField
+                        variant='standard'
+                        id="date"
+                        type='text'
+                        name="date"
+                        inputProps={{
+                          inputMode: 'numeric'
+                        }}
+                        sx={{
+                          marginBottom: 3,
+                          width: 350,
+                          outline: '#FDBF5A',
+                          '& .MuiInputBase-root::after' : {
+                            borderBottom: '#FDBF5A'
+                          }
+                        }}
+                        value={cardData}
+                        onChange = {(e) => changeDate(e)}
+                      /><br/>
+                  </div>
+                  <div className="cvc">
+                    <label htmlFor="CVC">CVC<br/></label>
+                    <TextField
+                        variant='standard'
+                        id="CVC"
+                        type='text'
+                        name="CVC"
+                        inputProps={{
+                          inputMode: 'numeric',
+                          pattern: '[0-9]*'
+                        }}
+                        sx={{
+                          marginBottom: 3,
+                          width: 350,
+                          outline: '#FDBF5A',
+                          '& .MuiInputBase-root::after' : {
+                            borderBottom: '#FDBF5A'
+                          }
+                        }}
+                        value={cardCvc}
+                        onChange = {(e) => changeCvc(e)}
+                      /><br/>
+                  </div>
+                </div>
+                <div className="form__right-column">
+                  <div className="card">
+                    <div className="card-header">
+                      <img src={cardLogo} className="card-logo" alt="card-logotype" />
+                      <div className="expire-date">
+                        {cardData}
+                      </div>
+                    </div>
+                    <div className="card-number">{cardNumber}</div>
+                    <div className="card__footer">
+                      <img src={cardMagnet} className="card-magnet" alt="card-magnet" />
+                      <div className="visa-logo"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" className="profile-btn">сохранить</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 Profile.propTypes = {
