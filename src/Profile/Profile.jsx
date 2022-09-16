@@ -206,7 +206,8 @@ const Profile = () => {
                         type='text'
                         name="card"
                         inputProps={{
-                          inputMode: 'numeric'
+                          inputMode: 'number',
+                          pattern: '[0-9, \s]*'
                         }}
                         sx={{
                           marginBottom: 3,
@@ -227,7 +228,8 @@ const Profile = () => {
                         type='text'
                         name="date"
                         inputProps={{
-                          inputMode: 'numeric'
+                          inputMode: 'number',
+                          pattern: '[0-9, \/]*'
                         }}
                         sx={{
                           marginBottom: 3,
@@ -249,7 +251,7 @@ const Profile = () => {
                         type='text'
                         name="CVC"
                         inputProps={{
-                          inputMode: 'numeric',
+                          inputMode: 'number',
                           pattern: '[0-9]*'
                         }}
                         sx={{
