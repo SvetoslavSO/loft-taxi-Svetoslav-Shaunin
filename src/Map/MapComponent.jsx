@@ -1,19 +1,8 @@
-import {
-  React,
-  useEffect,
-  useRef
-} from "react";
-import {
-  coords
-} from '../redux/ui/selector';
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux';
-import {
-  needTaxi
-} from '../redux/ui/actions'
+import { React, useEffect, useRef } from "react";
 import mapboxgl from 'mapbox-gl';
+import { useDispatch, useSelector } from 'react-redux';
+import { needTaxi } from '../redux/order/actions'
+import { coordsSelector } from '../redux/order/selector';
 import env from './env';
 import './Map.css'
 
@@ -21,7 +10,7 @@ mapboxgl.accessToken = env.accessToken;
 
 const MapComponent = () => {
   const mapContainerRef = useRef(null);
-  const coordinates = useSelector(coords)
+  const coordinates = useSelector(coordsSelector)
   const dispatch = useDispatch()
   
   useEffect(() => {
@@ -65,6 +54,16 @@ const MapComponent = () => {
       } else {
         map.removeSource('route')
       }
+
+      /*if(isCardChanged === true) {
+        console.log('here')
+        dispatch(coords([]))
+        dispatch(taxiReady(false))
+        dispatch(setSecondArrayAddress(null))
+        dispatch(setFirstArrayAddress(null))
+        dispatch(setFirstAddress(''))
+        dispatch(setSecondAddress(''))
+      }*/
     })
 
     return () => map.remove();

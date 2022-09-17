@@ -1,11 +1,10 @@
 import { React, useEffect, useCallback, useMemo } from "react";
-import {PropTypes} from 'prop-types'
+import { PropTypes } from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { setPage } from '../redux/ui/actions'
+import TextField from '@mui/material/TextField';
 import {
-  useDispatch,
-  useSelector 
-} from 'react-redux';
-import {
-  setPage,
   setFirstAddress,
   setSecondAddress,
   setFirstArrayAddress,
@@ -14,23 +13,19 @@ import {
   taxiReady,
   coords,
   carChange
-} from '../redux/ui/actions'
+} from '../redux/order/actions'
+import { logged } from '../redux/ui/selector';
 import {
-  logged,
   addressesSelector,
   firstAddressSelector,
   secondAddressSelector,
   firstArrayAddressSelector,
   secondArrayAddressSelector,
   taxiReadySelector,
-  isCardCompletedSelector,
   activeCarSelector
-} from '../redux/ui/selector';
-import {
-  useNavigate
-} from "react-router-dom";
+} from '../redux/order/selector'
+import { isCardCompletedSelector } from '../redux/payment/selector'
 import './ModalWindow.css'
-import TextField from '@mui/material/TextField';
 import standard from '../assets/standard.png'
 import comfort from '../assets/comfort.png'
 import buisness from '../assets/buisness.png'
@@ -48,7 +43,7 @@ const ModalWindow = () => {
   const firstAddress = useSelector(firstAddressSelector)
   const secondAddress = useSelector(secondAddressSelector)
   const firstArrayAddress = useSelector(firstArrayAddressSelector)
-  const secondArrayAddress = useSelector(secondArrayAddressSelector)
+  const secondArrayAddress = useSelector(secondArrayAddressSelector) 
   const activeCar = useSelector(activeCarSelector)
 
   const changeState = useCallback((namePage) => {
@@ -62,33 +57,33 @@ const ModalWindow = () => {
     }
   }, [loggedIn, navigate, changeState])
 
-  const order = () => {
+  const order = useCallback(() => {
     if(firstAddress && secondAddress) {
       dispatch(needTaxi())
     } else {
       alert('не выбраны адреса')
     }
-  }
+  }, [dispatch, firstAddress, secondAddress])
 
-  const setCar = (carName) => {
+  const setCar = useCallback((carName) => {
     dispatch(carChange(carName))
-  }
+  }, [dispatch])
 
-  const navigateToProfile = () => {
+  const navigateToProfile = useCallback(() => {
     navigate('/profile')
     changeState('Profile')
-  }
+  }, [navigate, changeState])
 
-  const newOrder = () => {
+  const newOrder = useCallback(() => {
     dispatch(coords([]))
-    dispatch(taxiReady())
+    dispatch(taxiReady(false))
     dispatch(setSecondArrayAddress(null))
     dispatch(setFirstArrayAddress(null))
     dispatch(setFirstAddress(''))
     dispatch(setSecondAddress(''))
-  }
+  }, [dispatch])
 
-  const handleChangeFirst = (e) => {
+  const handleChangeFirst = useCallback((e) => {
     e.preventDefault()
     for(let i=0; i<places.length; i++) {
       if (places[i] === e.target.innerHTML) {
@@ -111,9 +106,9 @@ const ModalWindow = () => {
         dispatch(setFirstAddress(''))
       }
     }
-  }
+  }, [dispatch, places])
 
-  const handleChangeSecond = (e) => {
+  const handleChangeSecond = useCallback((e) => {
     e.preventDefault()
     for(let i=0; i<places.length; i++) {
       if (places[i] === e.target.innerHTML) {
@@ -136,7 +131,7 @@ const ModalWindow = () => {
         dispatch(setSecondAddress(''))
       }
     }
-  }
+  }, [dispatch, places])
 
   const memoIsActive = useMemo(() => 
     (value, activeCar) => {

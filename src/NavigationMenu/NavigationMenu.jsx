@@ -1,12 +1,12 @@
 import { React, useCallback, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import {PropTypes} from 'prop-types'
 import { setPage, logOut } from '../redux/ui/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { logOutUser } from '../redux/user/actions';
+import { logOutPayment } from "../redux/payment/actions";
+import { logOutOrder } from "../redux/order/actions";
 import { selectPage, logged } from '../redux/ui/selector';
-import {
-  useNavigate,
-  Link
-} from "react-router-dom";
 import './NavigationMenu.css'
 import logo from '../assets/logo.svg';
 import { useMemo } from "react";
@@ -15,8 +15,7 @@ const NavigationMenu = () => {
   const navigate = useNavigate()
   const loggedIn = useSelector(logged)
   const dispatch = useDispatch()
-  const page = useSelector(selectPage)
-  const activeItem = page
+  const activeItem = useSelector(selectPage)
 
   const memoIsActive = useMemo(() => 
     (value, activeItem) => {
@@ -27,10 +26,13 @@ const NavigationMenu = () => {
     dispatch(setPage(namePage));
   }, [dispatch])
   
-  const unAuth = () => {
+  const unAuth = useCallback(() => {
     dispatch(logOut())
+    dispatch(logOutPayment())
+    dispatch(logOutUser())
+    dispatch(logOutOrder())
     changeState('Logout')
-  }
+  }, [dispatch, changeState])
 
   useEffect(() => {
     if (!loggedIn) {

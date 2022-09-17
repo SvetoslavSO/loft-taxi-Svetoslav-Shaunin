@@ -1,13 +1,10 @@
 import { React, useEffect, useCallback } from "react";
-import TextField from '@mui/material/TextField';
-import {PropTypes} from 'prop-types'
-import { setPage, authenticate } from '../redux/ui/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+import { PropTypes } from 'prop-types'
+import { setPage, authenticate } from '../redux/ui/actions';
 import { logged } from '../redux/ui/selector';
-import {
-  useNavigate,
-  Link
-} from "react-router-dom";
 import './Logout.css'
 import logo from "../assets/logo-login.svg"
 
@@ -16,14 +13,14 @@ const Logout = () => {
   const dispatch = useDispatch()
   const loggedIn = useSelector(logged)
 
-  const setUser = (event) => {
+  const setUser = useCallback((event) => {
     event.preventDefault()
     const payload = {
         payloadEmail : event.target.email.value,
         payloadPassword : event.target.password.value
     }
     dispatch(authenticate(payload))
-  }
+  }, [dispatch])
 
   const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
@@ -37,7 +34,7 @@ const Logout = () => {
   }, [loggedIn, navigate, changeState])
 
   return (
-    <div className="login-page">
+    <div className="login-page" data-testid='logout-page'>
       <div className="login__left-column">
         <img src={logo} className="login-logo" alt="logo" />
       </div>

@@ -4,10 +4,7 @@ import './App.css';
 import { Map } from './Map'
 import { Profile } from './Profile';
 import { Logout } from './Logout';
-import {
-  Routes,
-  Route
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (

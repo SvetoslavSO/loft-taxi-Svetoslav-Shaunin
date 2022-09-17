@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit'
 import {
-  regCard,
+  //regCard,
   setPage,
   logIn,
   logOut,
   authToken,
-  setCardName,
+  /*setCardName,
   setCardDate,
   setCardNumber,
   setCardCvc,
@@ -19,44 +19,37 @@ import {
   taxiReady,
   checkCard,
   isCardChanged,
-  carChange
+  carChange*/
 } from './actions'
 const initialStore = {
   isLoggedIn: false,
   page: 'Logout',
-  user: {
+  // user done
+  /*user: {
     email: '',
     password: '',
     name: '',
     surname: ''
-  },
-  userCard: {
+  },*/
+  //payment
+  /*userCard: {
     name: '',
     cardNumber: '',
     cardDate: '',
     cvc: ''
-  },
-  currentCard: {
-    name: '',
-    cardNumber: '',
-    cardDate: '',
-    cvc: '',
-    numberCounter: 0,
-    dateCounter: 0
-  },
-  addresses: [],
+  },*/
+  //addresses: [],
   authToken: '',
-  firstAddress: '',
-  secondAddress: '',
-  setAddresses: '',
-  firstArrayAddress: null,
-  secondArrayAddress: null,
-  coordinates: [],
-  needTaxi: false,
-  taxiReady: false,
-  isCardCompleted: false,
-  cardChanged: false,
-  activeCar: 'standart'
+  //firstAddress: '',
+  //secondAddress: '',
+  //firstArrayAddress: null,
+  //secondArrayAddress: null,
+  //coordinates: [],
+  //needTaxi: false,
+  //taxiReady: false,
+  //isCardCompleted: false,
+  //cardChanged: false,
+  //activeCar: 'standart'
 }
 
 export const uiReducer = createReducer(initialStore, {
@@ -64,47 +57,42 @@ export const uiReducer = createReducer(initialStore, {
     store.page = action.payload;
   },
   [logIn.type]: (store, action) => {
-    store.isLoggedIn = true;
-    store.user.surname = action.payload.surname
-    store.user.name = action.payload.name;
-    store.user.email = action.payload.email;
-    store.user.password = action.payload.password
+    store.isLoggedIn = true
   },
   [logOut.type]:  (store) => {
     store.isLoggedIn = false;
-    store.user.email = '';
-    store.user.password = '';
-    store.user.surname = '';
-    store.user.name = '';
-    store.userCard.name = '';
-    store.userCard.cardNumber = '';
-    store.userCard.cardDate = '';
-    store.userCard.cvc = '';
-    store.currentCard.name = '';
-    store.currentCard.cardNumber = '';
-    store.currentCard.cardDate = '';
-    store.currentCard.cvc = '';
-    store.addresses= [];
+    //store.user.email = '';
+    //store.user.password = '';
+    //store.user.surname = '';
+    //store.user.name = '';
+    //store.userCard.name = '';
+    //store.userCard.cardNumber = '';
+    //store.userCard.cardDate = '';
+    //store.userCard.cvc = '';
+    //store.currentCard.name = '';
+    //store.currentCard.cardNumber = '';
+    //store.currentCard.cardDate = '';
+    //store.currentCard.cvc = '';
+    //store.addresses= [];
     store.authToken =  '';
-    store.firstAddress = '';
-    store.secondAddress = '';
-    store.setAddresses = '';
-    store.firstArrayAddress = null;
-    store.secondArrayAddress = null;
-    store.needTaxi = false;
-    store.taxiReady = false;
-    store.coordinates = [];
-    store.cardChanged = false;
-  },
+    //store.firstAddress = '';
+    //store.secondAddress = '';
+    //store.firstArrayAddress = null;
+    //store.secondArrayAddress = null;
+    //store.needTaxi = false;
+    //store.taxiReady = false;
+    //store.coordinates = [];
+    //store.cardChanged = false;
+  },/*
   [regCard.type]: (store, action) => {
     store.userCard.name = action.payload.cardName
     store.userCard.cardNumber = action.payload.cardNumber
     store.userCard.cardDate = action.payload.expiryDate
     store.userCard.cvc = action.payload.cvc
-  },
+  },*/
   [authToken.type]: (store, action) => {
     store.authToken = action.payload
-  },
+  },/*
   [setCardName.type]: (store, action) => {
     store.userCard.name = action.payload
   },
@@ -140,8 +128,8 @@ export const uiReducer = createReducer(initialStore, {
   },
   [taxiReady.type]: (store) => {
     store.taxiReady = !store.taxiReady
-  },
-  [checkCard.type]: (store) => {
+  },*/
+  /*[checkCard.type]: (store) => {
     if (store.userCard.cardDate === undefined || store.userCard.cardNumber === undefined || store.userCard.name === undefined || store.userCard.cvc === undefined) {
       store.isCardCompleted = false
     } else {
@@ -153,5 +141,5 @@ export const uiReducer = createReducer(initialStore, {
   },
   [carChange.type] : (store, action) => {
     store.activeCar = action.payload
-  }
+  }*/
 })

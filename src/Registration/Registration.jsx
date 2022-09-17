@@ -1,12 +1,10 @@
 import { React, useEffect, useCallback } from "react";
-import TextField from '@mui/material/TextField';
-import {PropTypes} from 'prop-types'
-import { setPage, reg } from '../redux/ui/actions';
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import TextField from '@mui/material/TextField';
+import { PropTypes } from 'prop-types'
+import { setPage, reg } from '../redux/ui/actions';
 import { logged } from '../redux/ui/selector';
-import {
-  useNavigate
-} from "react-router-dom";
 import './Registration.css'
 import logo from "../assets/logo-login.svg"
 
@@ -26,7 +24,7 @@ const Registration = () => {
     }
   }, [loggedIn, navigate, changeState])
 
-  const registrate = (event) => {
+  const registrate = useCallback((event) => {
     event.preventDefault();
     const payload = {
       payloadEmail: event.target.email.value,
@@ -35,7 +33,7 @@ const Registration = () => {
       payloadSurname : 'Shaunin'
     }
     dispatch(reg(payload))
-  }
+  }, [dispatch])
 
   return (
     <div className="login-page">

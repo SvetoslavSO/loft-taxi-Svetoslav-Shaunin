@@ -1,29 +1,13 @@
-import {
-  React,
-  useEffect,
-  useCallback
-} from "react";
-import {PropTypes} from 'prop-types'
-import { 
-  logged,
-  taxiSelector,
-  firstAddressSelector,
-  secondAddressSelector,
-  tokenSelector,
-  cardChangedSelector
-} from '../redux/ui/selector';
-import {
-  orderReq,
-  setPage,
-  isCardChanged
-} from '../redux/ui/actions';
-import { 
-  useDispatch,
-  useSelector
-} from 'react-redux';
-import {
-  useNavigate
-} from "react-router-dom";
+import { React, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { PropTypes } from 'prop-types';
+import { setPage } from '../redux/ui/actions';
+import { orderReq } from '../redux/order/actions';
+import { isCardChanged } from '../redux/payment/actions';
+import { logged, tokenSelector } from '../redux/ui/selector';
+import { taxiSelector, firstAddressSelector, secondAddressSelector } from '../redux/order/selector';
+import { cardChangedSelector } from '../redux/payment/selector';
 import { NavigationMenu } from "../NavigationMenu";
 import './Map.css'
 import MapComponent from "./MapComponent";
@@ -62,13 +46,13 @@ const Map = () => {
       }
       dispatch(orderReq(payload))
     }
-  })
+  }, [dispatch, needTaxi, firstAddress, secondAddress, token])
 
   useEffect(() => {
     if(cardChanged){
       dispatch(isCardChanged(false))
     }
-  })
+  }, [dispatch, cardChanged])
 
 
   return (

@@ -1,34 +1,25 @@
+import { React, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { PropTypes } from 'prop-types'
+import { setPage } from '../redux/ui/actions';
 import {
-  React,
-  useEffect,
-  useCallback
-} from "react";
-import {PropTypes} from 'prop-types'
-import {
-  setPage,
   addCard,
   setCardName,
   setCardDate,
   setCardNumber,
   setCardCvc,
-  isCardChanged
-} from '../redux/ui/actions';
+  isCardChanged,
+  checkCard
+} from "../redux/payment/actions"
+import { logged, tokenSelector } from "../redux/ui/selector"
 import {
-  useDispatch,
-  useSelector
-} from 'react-redux';
-import {
-  logged,
-  tokenSelector,
   cardNameSelector,
   cardCvcSelector,
   cardDateSelector,
   cardNumberSelector,
   cardChangedSelector
-} from "../redux/ui/selector"
-import {
-  useNavigate
-} from "react-router-dom";
+} from "../redux/payment/selector"
 import { NavigationMenu } from '../NavigationMenu'
 import './Profile.css'
 import cardLogo from '../assets/cardLogo.svg';
@@ -41,14 +32,23 @@ const Profile = () => {
   const dispatch = useDispatch()
   const loggedIn = useSelector(logged)
   const token = useSelector(tokenSelector)
-  let cardNumber = useSelector(cardNumberSelector)
-  let cardData = useSelector(cardDateSelector)
-  let cardCvc = useSelector(cardCvcSelector)
-  let cardName = useSelector(cardNameSelector)
+  const cardNumber = useSelector(cardNumberSelector)
+  const cardData = useSelector(cardDateSelector)
+  const cardCvc = useSelector(cardCvcSelector)
+  const cardName = useSelector(cardNameSelector)
   const cardChanged = useSelector(cardChangedSelector)
 
   const changeState = useCallback((namePage) => {
     dispatch(setPage(namePage));
+  }, [dispatch])
+
+  const goToMap = useCallback(() => {
+    navigate('/map')
+    changeState('Map')
+  }, [changeState, navigate])
+
+  const changeName = useCallback((e) => {
+    dispatch(setCardName(e.target.value))
   }, [dispatch])
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const Profile = () => {
     }
   }, [loggedIn, navigate, changeState])
 
-  const submitCard = (event) => {
+  const submitCard = useCallback((event) => {
     event.preventDefault()
     const payload = {
       cardName: event.target.username.value,
@@ -75,88 +75,60 @@ const Profile = () => {
     } else {
       dispatch(addCard(payload))
       dispatch(isCardChanged(true))
+      dispatch(checkCard(true))
     }
-  }
+  }, [dispatch, token])
 
-  const goToMap = () => {
-    navigate('/map')
-    changeState('Map')
-  }
-
-  let cardNumberValue = ''
-  let cardDateValue = ''
-  let cardCvcValue = ''
-  let cardNameValue = ''
-
-  const changeName = (e) => {
-    cardNameValue = e.target.value
-    dispatch(setCardName(cardNameValue))
-  }
-
-  const changeNumber = (e) => {
-    cardNumberValue = e.target.value
-    if(cardNumberValue.length === 4 ) {
-      cardNumberValue = cardNumberValue + '  '
-      dispatch(setCardNumber(`${cardNumberValue}`))
-    } else if (cardNumberValue.length === 5) {
+  const changeNumber = useCallback((e) => {
+    if(e.target.value.length === 4 ) {
+      dispatch(setCardNumber(e.target.value + '  '))
+    } else if (e.target.value.length === 5) {
       if(e.nativeEvent.data === null) {
-        cardNumberValue = cardNumberValue.substring(0, 4)
-        dispatch(setCardNumber(`${cardNumberValue}`))
+        dispatch(setCardNumber(e.target.value.substring(0, 4)))
       } else {
-        cardNumberValue = cardNumberValue.substring(0, 4) + '  ' + cardNumberValue.substring(4) 
-        dispatch(setCardNumber(`${cardNumberValue}`))
+        dispatch(setCardNumber(e.target.value.substring(0, 4) + '  ' + e.target.value.substring(4) ))
       }
-    } else if (cardNumberValue.length === 10) {
-      cardNumberValue = cardNumberValue + '  '
-      dispatch(setCardNumber(`${cardNumberValue}`))    
-    } else if (cardNumberValue.length === 11) {
+    } else if (e.target.value.length === 10) {
+      dispatch(setCardNumber(e.target.value + '  '))    
+    } else if (e.target.value.length === 11) {
       if(e.nativeEvent.data === null) {
-        cardNumberValue = cardNumberValue.substring(0, 10)
-        dispatch(setCardNumber(`${cardNumberValue}`))
+        dispatch(setCardNumber(e.target.value.substring(0, 10)))
       } else {
-        cardNumberValue = cardNumberValue.substring(0, 10) + '  ' + cardNumberValue.substring(10) 
-        dispatch(setCardNumber(`${cardNumberValue}`))
+        dispatch(setCardNumber(e.target.value.substring(0, 10) + '  ' + e.target.value.substring(10) ))
       }
-    } else if (cardNumberValue.length === 16) {
-      cardNumberValue = cardNumberValue + '  '
-      dispatch(setCardNumber(`${cardNumberValue}`))
-    } else if (cardNumberValue.length === 17) {
+    } else if (e.target.value.length === 16) {
+      dispatch(setCardNumber(e.target.value + '  '))
+    } else if (e.target.value.length === 17) {
       if(e.nativeEvent.data === null) {
-        cardNumberValue = cardNumberValue.substring(0, 16)
-        dispatch(setCardNumber(`${cardNumberValue}`))
+        dispatch(setCardNumber(e.target.value.substring(0, 16)))
       } else {
-        cardNumberValue = cardNumberValue.substring(0, 16) + '  ' + cardNumberValue.substring(16) 
-        dispatch(setCardNumber(`${cardNumberValue}`))
+        dispatch(setCardNumber(e.target.value.substring(0, 16) + '  ' + e.target.value.substring(16) ))
       }
-    }else if (cardNumberValue.length <= 22) {
-      dispatch(setCardNumber(cardNumberValue))
+    }else if (e.target.value.length <= 22) {
+      dispatch(setCardNumber(e.target.value))
     } 
-  }
+  }, [dispatch])
 
-  const changeDate = (e) => {
-    cardDateValue = e.target.value
-    if(cardDateValue.length === 3  && (cardDateValue.substring(2) === '/')) {
-      cardDateValue = cardDateValue.substring(0, cardDateValue.length - 1)
-      dispatch(setCardDate(`${cardDateValue}`))
-    } else if(cardDateValue.length === 3  && (cardDateValue.substring(2) !== '/')) {
-      cardDateValue = cardDateValue.substring(0, 2) + '/' + cardDateValue.substring(2)
-      dispatch(setCardDate(`${cardDateValue}`))
-    } else if(cardDateValue.length === 2 && (e.nativeEvent.data === null)) {
-      dispatch(setCardDate(`${cardDateValue}`))
-    } else if(cardDateValue.length === 2 && (e.nativeEvent.data !== null)) {
-      cardDateValue = cardDateValue + '/'
-      dispatch(setCardDate(`${cardDateValue}`))
-    }  else if (cardDateValue.length <= 5) {
-      dispatch(setCardDate(cardDateValue))
+  const changeDate = useCallback((e) => {
+    if(e.target.value.length === 3  && (e.target.value.substring(2) === '/')) {
+      dispatch(setCardDate(e.target.value.substring(0, e.target.value.length - 1)))
+    } else if(e.target.value.length === 3  && (e.target.value.substring(2) !== '/')) {
+      
+      dispatch(setCardDate(e.target.value.substring(0, 2) + '/' + e.target.value.substring(2)))
+    } else if(e.target.value.length === 2 && (e.nativeEvent.data === null)) {
+      dispatch(setCardDate(e.target.value))
+    } else if(e.target.value.length === 2 && (e.nativeEvent.data !== null)) {
+      dispatch(setCardDate(e.target.value + '/'))
+    }  else if (e.target.value.length <= 5) {
+      dispatch(setCardDate(e.target.value))
     } 
-  }
+  }, [dispatch])
 
-  const changeCvc = (e) => {
-    cardCvcValue = e.target.value
-    if(cardCvcValue.length <= 3) {
-      dispatch(setCardCvc(`${cardCvcValue}`))
+  const changeCvc = useCallback((e) => {
+    if(e.target.value.length <= 3) {
+      dispatch(setCardCvc(e.target.value))
     } 
-  }
+  }, [dispatch])
 
   if(cardChanged){
     return (

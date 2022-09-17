@@ -1,6 +1,6 @@
 import { takeEvery, call , put } from 'redux-saga/effects'
 import { regRequest } from '../requests/addCardRequest'
-import { addCard, regCard } from '../ui/actions'
+import { addCard, regCard } from '../payment/actions'
 
 
 export function* addSaga(action) {
