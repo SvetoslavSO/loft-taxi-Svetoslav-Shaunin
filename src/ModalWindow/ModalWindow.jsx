@@ -59,7 +59,7 @@ const ModalWindow = () => {
 
   const order = useCallback(() => {
     if(firstAddress && secondAddress) {
-      dispatch(needTaxi())
+      dispatch(needTaxi(true))
     } else {
       alert('не выбраны адреса')
     }
@@ -75,8 +75,10 @@ const ModalWindow = () => {
   }, [navigate, changeState])
 
   const newOrder = useCallback(() => {
+    console.log('in modal new')
     dispatch(coords([]))
     dispatch(taxiReady(false))
+    dispatch(needTaxi(false))
     dispatch(setSecondArrayAddress(null))
     dispatch(setFirstArrayAddress(null))
     dispatch(setFirstAddress(''))
@@ -155,7 +157,7 @@ const ModalWindow = () => {
                   borderBottom: '#FDBF5A'
                 }
               }}
-              onChange = {(e) => handleChangeFirst(e)}
+              onChange = {handleChangeFirst}
               renderInput={(params) => <TextField {...params} label="выберите адрес начальной точки маршрута"/>}
             />
             <Autocomplete
@@ -170,7 +172,7 @@ const ModalWindow = () => {
                   borderBottom: '#FDBF5A'
                 }
               }}
-              onChange = {(e) => handleChangeSecond(e)}
+              onChange = {handleChangeSecond}
               renderInput={(params) => <TextField {...params} label="выберите адрес конечной точки маршрута"/>}
             />
           </form>

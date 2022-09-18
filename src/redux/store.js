@@ -12,7 +12,7 @@ import { orderSaga } from "./sagas/orderSaga";
 
 const sagaMiddleware = createSagaMiddleware()
 
-const rootReducers = combineReducers({
+export const rootReducers = combineReducers({
   ui: uiReducer,
   payment: paymentReducer,
   order: orderReducer,

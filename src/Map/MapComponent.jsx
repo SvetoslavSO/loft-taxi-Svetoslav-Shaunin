@@ -1,7 +1,6 @@
 import { React, useEffect, useRef } from "react";
 import mapboxgl from 'mapbox-gl';
 import { useDispatch, useSelector } from 'react-redux';
-import { needTaxi } from '../redux/order/actions'
 import { coordsSelector } from '../redux/order/selector';
 import env from './env';
 import './Map.css'
@@ -50,20 +49,9 @@ const MapComponent = () => {
             "line-width": 8
           }
         });
-        dispatch(needTaxi())
       } else {
         map.removeSource('route')
       }
-
-      /*if(isCardChanged === true) {
-        console.log('here')
-        dispatch(coords([]))
-        dispatch(taxiReady(false))
-        dispatch(setSecondArrayAddress(null))
-        dispatch(setFirstArrayAddress(null))
-        dispatch(setFirstAddress(''))
-        dispatch(setSecondAddress(''))
-      }*/
     })
 
     return () => map.remove();

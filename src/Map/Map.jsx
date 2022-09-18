@@ -38,7 +38,7 @@ const Map = () => {
   }, [loggedIn, navigate, changeState])
 
   useEffect(() => {
-    if(needTaxi){
+    if(needTaxi === true){
       const payload = {
         firstAddress: firstAddress,
         secondAddress: secondAddress,

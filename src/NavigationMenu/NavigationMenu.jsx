@@ -27,6 +27,7 @@ const NavigationMenu = () => {
   }, [dispatch])
   
   const unAuth = useCallback(() => {
+    console.log('in unauth')
     dispatch(logOut())
     dispatch(logOutPayment())
     dispatch(logOutUser())

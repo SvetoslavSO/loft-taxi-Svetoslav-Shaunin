@@ -41,11 +41,10 @@ export const orderReducer = createReducer(orderStore, {
     store.secondArrayAddress = action.payload
   },
   [coords.type]: (store, action) => {
-    console.log(action.payload)
     store.coordinates = action.payload
   },
-  [needTaxi.type]: (store) => {
-    store.needTaxi = !store.needTaxi
+  [needTaxi.type]: (store, action) => {
+    store.needTaxi = action.payload
   },
   [taxiReady.type]: (store, action) => {
     store.taxiReady = action.payload

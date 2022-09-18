@@ -15,9 +15,10 @@ const Logout = () => {
 
   const setUser = useCallback((event) => {
     event.preventDefault()
+    const { email, password } = event.target 
     const payload = {
-        payloadEmail : event.target.email.value,
-        payloadPassword : event.target.password.value
+        payloadEmail : email.value,
+        payloadPassword : password.value
     }
     dispatch(authenticate(payload))
   }, [dispatch])
@@ -44,14 +45,14 @@ const Logout = () => {
             <div className="enter">
               Войти
             </div>
-            <form onSubmit={setUser} className="form">
+            <form data-testid='form-logout-page' onSubmit={setUser} className="form">
               <div className="form__left-column">
-                <label htmlFor="email">Email</label><br/>
                 <TextField 
                   variant='standard' 
                   id="email" 
                   type='email' 
                   name="email"
+                  label="Email" 
                   sx={{
                     marginBottom: 3,
                     width: 350,
@@ -61,12 +62,12 @@ const Logout = () => {
                     }
                   }}
                 /><br/>
-                <label htmlFor="password">Пароль</label><br/>
                 <TextField 
                   variant='standard' 
                   id="password" 
                   type='password' 
                   name="password"
+                  label="Password" 
                   sx={{
                     marginBottom: 3,
                     width: 350,
@@ -77,13 +78,13 @@ const Logout = () => {
                   }}
                 />
                 <div className="form__addition">Забыли Пароль</div>
-                <button type="submit" className="btn-login" >Войти</button>
+                <button data-testid="submit-btn-logout" type="submit" className="btn-login" >Войти</button>
               </div>
             </form>
             <div className="new-profile">
               <div className="new-profile__text">Новый пользователь?</div>
               <Link to="/registration">
-                <button className="new-profile-btn" type="button" onClick={() => changeState("Registration")}>Регистрация</button>
+                <button data-testid='new-profile-btn' className="new-profile-btn" type="button" onClick={changeState("Registration")}>Регистрация</button>
               </Link>
             </div>
           </div>

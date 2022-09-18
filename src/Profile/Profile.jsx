@@ -113,7 +113,6 @@ const Profile = () => {
     if(e.target.value.length === 3  && (e.target.value.substring(2) === '/')) {
       dispatch(setCardDate(e.target.value.substring(0, e.target.value.length - 1)))
     } else if(e.target.value.length === 3  && (e.target.value.substring(2) !== '/')) {
-      
       dispatch(setCardDate(e.target.value.substring(0, 2) + '/' + e.target.value.substring(2)))
     } else if(e.target.value.length === 2 && (e.nativeEvent.data === null)) {
       dispatch(setCardDate(e.target.value))
@@ -169,7 +168,7 @@ const Profile = () => {
                           }
                         }}
                         value = {cardName}
-                        onChange = {(e) => changeName(e)}
+                        onChange = {changeName}
                       /><br/>
                   <label htmlFor="card">Номер карты<br/></label>
                   <TextField
@@ -190,7 +189,7 @@ const Profile = () => {
                           }
                         }}
                         value={cardNumber}
-                        onChange = {(e) => changeNumber(e)}
+                        onChange = {changeNumber}
                       /><br/>  
                   <div className="expiration-date">
                     <label htmlFor="date">MM/YY<br/></label>
@@ -212,7 +211,7 @@ const Profile = () => {
                           }
                         }}
                         value={cardData}
-                        onChange = {(e) => changeDate(e)}
+                        onChange = {changeDate}
                       /><br/>
                   </div>
                   <div className="cvc">
