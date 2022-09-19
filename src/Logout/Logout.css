@@ -1,0 +1,74 @@
+.login-page{
+  height: 100%;
+  display: flex;
+}
+
+.login-logo{
+  width: 192px;
+}
+
+.login__left-column{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #282c34;
+}
+
+.login__right-column{
+  flex: 1.5;
+}
+
+.right-column__content{
+  background-image: url('../assets/map-background.png');
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.enter{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.form-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 30px;
+  padding: 56px 112px;
+  background: #fff;
+  height: 540px;
+  width: 580px;
+}
+
+.form__addition{
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.btn-login{
+  cursor: pointer;
+  font-size: 25px;
+  width: 353px;
+  font-weight: 400;
+  border: none;
+  padding: 16px;
+  background: #FDBF5A; 
+  border-radius: 32px;
+  margin-bottom: 5px;
+}
+
+.new-profile{
+  justify-content: center;
+  display: flex;
+}
+
+.new-profile-btn{
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #FDBF5A;
+}

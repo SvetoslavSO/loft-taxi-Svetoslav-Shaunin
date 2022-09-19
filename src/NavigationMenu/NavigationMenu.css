@@ -1,0 +1,31 @@
+.navigation-items{
+  display: flex;
+  margin-right: 2.5vw;
+}
+
+.navigation-item{
+  margin-right: 2.5vw;
+  font-size: 2vmin;
+  cursor: pointer;
+}
+
+.navigation-item.active{
+  color: #FDBF5A;
+}
+
+.navigation-item:last-child{
+  margin-right: 0;
+}
+
+.navigation-button{
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 2vmin;
+  color: #fff;
+  font-weight: 400;
+}
+
+.navigation-button.active{
+  color: #FDBF5A;
+}
