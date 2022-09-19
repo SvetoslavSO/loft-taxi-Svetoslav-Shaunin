@@ -179,7 +179,7 @@ const ModalWindow = () => {
         </div>
         <div className="modal__content">
           <ul className="choose__rate">
-            <li className={memoIsActive('standart', activeCar)} onClick={() => setCar('standart')}>
+            <li data-testid="rate-standart-test" className={memoIsActive('standart', activeCar)} onClick={() => setCar('standart')}>
               <div className="rate__description">
                 <div className="rate__name">
                   Стандарт
@@ -195,7 +195,7 @@ const ModalWindow = () => {
                 <img src={standard} alt="" className="car__picture" />
               </div>
             </li>
-            <li className={memoIsActive('comfort', activeCar)} onClick={() => setCar('comfort')}>
+            <li data-testid="rate-comfort-test" className={memoIsActive('comfort', activeCar)} onClick={() => setCar('comfort')}>
               <div className="rate__description">
                 <div className="rate__name">
                   Премиум
@@ -234,7 +234,7 @@ const ModalWindow = () => {
     );
   } else if(isTaxiReady) {
     return (
-     <div className="new-order">
+     <div className="new-order" data-testid="taxi-ordered-test">
        <div className="new-order__text">
          <div className="new-order__title">Заказ размещён</div>
          <div className="new-order__desc">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</div>
@@ -244,7 +244,7 @@ const ModalWindow = () => {
     )
   } else {
     return (
-      <div className="add-card">
+      <div className="add-card" data-testid="add-card-modal-test">
         <div className="add-card__desc">Для того, чтобы заказать такси, пожалуйста, заполните карту</div>
         <button onClick={navigateToProfile} type="button" className="modal-btn">Заполнить карту</button>
       </div>

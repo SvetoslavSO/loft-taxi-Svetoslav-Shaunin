@@ -56,7 +56,7 @@ const Map = () => {
 
 
   return (
-    <div data-testid='map-page-test' className="map-page">
+    <div className="map-page">
       <NavigationMenu activeItem='Map' />
       <div className="map-container">
         <MapComponent/>

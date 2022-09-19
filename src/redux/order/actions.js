@@ -1,6 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const logOutOrder = createAction("@order/logOut")
+export const logOutOrder = createAction("@order/logOutOrder")
 export const setAddresses = createAction("@order/setAddresses")
 export const setFirstAddress = createAction("@order/setFirstAddress")
 export const setSecondAddress = createAction("@order/setSecondAddress")

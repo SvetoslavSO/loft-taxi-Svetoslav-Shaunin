@@ -131,7 +131,7 @@ const Profile = () => {
 
   if(cardChanged){
     return (
-      <div data-testid='profile' className="profile-page">
+      <div data-testid='changed-card-profile' className="profile-page">
         <NavigationMenu activeItem='Profile'/>
         <div className="profile__container">
           <div className="profile-changed__content">

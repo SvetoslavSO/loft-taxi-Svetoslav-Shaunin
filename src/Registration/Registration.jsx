@@ -48,12 +48,12 @@ const Registration = () => {
             </div>
             <form onSubmit={registrate} className="form">
               <div className="form__left-column">
-                <label htmlFor="email">Email</label><br/>
                 <TextField 
                   variant='standard' 
                   id="email" 
                   type='email' 
                   name="email"
+                  label="Email"
                   sx={{
                     marginBottom: 3,
                     width: 350,
@@ -63,12 +63,12 @@ const Registration = () => {
                     }
                   }}
                 /><br/>
-                <label htmlFor="name">Как вас зовут?</label><br/>
                 <TextField 
                   variant='standard' 
                   id="name" 
                   type='text' 
                   name="name"
+                  label="Как вас зовут"
                   sx={{
                     marginBottom: 3,
                     width: 350,
@@ -78,12 +78,12 @@ const Registration = () => {
                     }
                   }}
                 />
-                <label htmlFor="password">Придумайте пароль</label><br/>
                 <TextField 
                   variant='standard' 
                   id="password" 
                   type='password' 
                   name="password"
+                  label="Придумайте пароль"
                   sx={{
                     marginBottom: 3,
                     width: 350,

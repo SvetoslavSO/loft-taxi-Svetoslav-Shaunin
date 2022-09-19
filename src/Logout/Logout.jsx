@@ -52,7 +52,7 @@ const Logout = () => {
                   id="email" 
                   type='email' 
                   name="email"
-                  label="Email" 
+                  label="Email"
                   sx={{
                     marginBottom: 3,
                     width: 350,
