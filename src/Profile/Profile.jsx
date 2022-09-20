@@ -178,6 +178,7 @@ const Profile = () => {
                         name="card"
                         inputProps={{
                           inputMode: 'number',
+                          // eslint-disable-next-line
                           pattern: '[0-9, \s]*'
                         }}
                         sx={{
@@ -200,6 +201,7 @@ const Profile = () => {
                         name="date"
                         inputProps={{
                           inputMode: 'number',
+                          // eslint-disable-next-line
                           pattern: '[0-9, \/]*'
                         }}
                         sx={{
