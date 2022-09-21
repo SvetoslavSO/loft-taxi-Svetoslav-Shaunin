@@ -6,6 +6,8 @@ import env from './env';
 import './Map.css'
 
 mapboxgl.accessToken = env.accessToken;
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const MapComponent = () => {
   const mapContainerRef = useRef(null);
