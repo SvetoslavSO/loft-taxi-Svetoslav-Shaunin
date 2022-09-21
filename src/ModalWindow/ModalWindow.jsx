@@ -75,7 +75,6 @@ const ModalWindow = () => {
   }, [navigate, changeState])
 
   const newOrder = useCallback(() => {
-    console.log('in modal new')
     dispatch(coords([]))
     dispatch(taxiReady(false))
     dispatch(needTaxi(false))
